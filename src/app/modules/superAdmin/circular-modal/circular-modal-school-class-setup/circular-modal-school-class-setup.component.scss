@@ -1,0 +1,14 @@
+.scrollable-content {
+  max-height: 800px;
+   display: block;
+  overflow: auto;
+}
+
+.scrollable-content::-webkit-scrollbar {
+    display: none;
+}
+
+.example-chip-list {
+  width: 500px;
+  height: 80px;
+}

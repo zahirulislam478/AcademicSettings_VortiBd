@@ -1,0 +1,44 @@
+/** @format */
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.inventory-grid {
+  grid-template-columns: 48px auto 40px;
+
+  @screen sm {
+    grid-template-columns: 48px auto 112px 72px;
+  }
+
+  @screen md {
+    grid-template-columns: 48px 112px auto 112px 72px;
+  }
+
+  @screen lg {
+    grid-template-columns: 48px 112px auto 112px 96px 96px 72px;
+  }
+}
+
+.custom-table th {
+  background-color: #c4c4c426 !important;
+  color: #000 !important;
+  font-weight: bold !important;
+  box-shadow: 0 5px 0 0 rgba(0, 0, 0, 0.1) !important;
+}
+
+th,
+td {
+  text-align: center;
+  padding: 0.5rem;
+}
+
+th {
+  font-weight: bold;
+}
+
+.mat-simple-snackbar-action .mat-button {
+  background-color: rgb(72, 236, 39) !important;
+}

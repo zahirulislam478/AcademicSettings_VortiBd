@@ -1,0 +1,14 @@
+{
+    "data":[
+      {
+        "id": 1,
+        "question": "How are you?",
+        "answer": "good"
+      },
+      {
+        "id": 2,
+        "question": "and How are you?",
+        "answer": "bad"
+      }
+    ]
+}

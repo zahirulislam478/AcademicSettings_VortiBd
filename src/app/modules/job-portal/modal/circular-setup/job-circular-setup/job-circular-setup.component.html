@@ -1,0 +1,114 @@
+<div class="md:w-160 md:min-w-160">
+    <div class="mb-6 flex justify-between">
+        <h2 class="tracking-tight text-blue-600 mt-2">Setup Job Circular
+            <hr class="line mt-0 pt-0" style="border: 1px solid blue; width: 5rem;">
+        </h2>
+        <div>
+            <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+                <mat-icon class="close-icon" color="grey">close</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <mat-dialog-content class="mat-typography">
+        <form class="space-y-3" [formGroup]="jobCircularModalForm" #jobCircularNgForm="ngForm">
+            <div class="flex flex-auto">
+                <mat-form-field class="w-full" [floatLabel]="'always'">
+                    <mat-label>Institute Name</mat-label>
+                    <mat-select (selectionChange)="circularInstituteChange($event)" [formControlName]="'instituteName'"
+                        placeholder="--Select Institute--">
+                        <mat-option *ngFor="let Institute of job" [value]="Institute.value">
+                            {{Institute.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="flex flex-auto">
+                <mat-form-field class="w-full">
+                    <mat-label>Circular Title</mat-label>
+                    <input matInput [formControlName]="'circularName'">
+                </mat-form-field>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-x-5">
+                <div class="flex flex-auto">
+                    <mat-form-field class="w-full" [floatLabel]="'always'">
+                        <mat-label>Open Date</mat-label>
+                        <input [matDatepicker]="openDate" placeholder="Choose a date" matInput
+                            [formControlName]="'openDate'" (dateChange)="fromDateChanged($event)"
+                            (click)="openDate.open()" readonly>
+                        <mat-datepicker-toggle matSuffix [for]="openDate"></mat-datepicker-toggle>
+                        <mat-datepicker #openDate></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+                <div class="flex flex-auto">
+                    <mat-form-field class="w-full" [floatLabel]="'always'">
+                        <mat-label>Close Date</mat-label>
+                        <input [matDatepicker]="closeDate" placeholder="Choose a date" matInput
+                            [formControlName]="'closeDate'" [min]="jobCircularModalForm.get('openDate').value"
+                            (click)="closeDate.open()" readonly>
+                        <mat-datepicker-toggle matSuffix [for]="closeDate"></mat-datepicker-toggle>
+                        <mat-datepicker #closeDate></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="flex flex-auto">
+                <mat-form-field class="fuse-mat-textarea w-full" [floatLabel]="'always'">
+                    <mat-label>Circular URL</mat-label>
+                    <input matInput [formControlName]="'circularUrl'" placeholder="--Input Circular URL/PDF/JPG File--">
+                </mat-form-field>
+            </div>
+
+            <div class="flex flex-auto">
+                <mat-form-field class="fuse-mat-textarea w-full" [floatLabel]="'always'">
+                    <mat-label>Tutorial Video URL</mat-label>
+                    <input matInput [formControlName]="'videoUrl'" placeholder="--Input Youtube Video--">
+                </mat-form-field>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-x-5">
+                <div class="flex flex-auto">
+                    <div class="w-full items-center mb-5 h-10">
+                        <mat-slide-toggle [color]="'primary'" labelPosition="before"
+                            [formControlName]="'uniqueApplyCheckByNID'">
+                            <span class="font-medium">Unique Applicant NID</span>
+                        </mat-slide-toggle>
+                    </div>
+                </div>
+                <!-- <div class="flex flex-auto" *ngIf="CircularData != null"> -->
+                <div class="flex flex-auto">
+                    <div class="w-full items-center mb-5 h-10">
+                        <mat-slide-toggle [color]="'primary'" labelPosition="before" [formControlName]="'status'">
+                            <span class="font-medium">Active Circular</span>
+                        </mat-slide-toggle>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-auto flex-col">
+                <span class="mb-2">
+                    Apply Instruction
+                </span>
+                <ckeditor [formControlName]="'ckData'" [editor]="Editor"></ckeditor>
+            </div>
+
+        </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="justify-end">
+        <div class="flex items-center justify-center">
+            <button class="ml-2" mat-flat-button [color]="'primary'" 
+                    (click)="this.circular == null ? createJobCircular() : updateJobCircular()">
+                {{this.circular == null ? 'Save' : 'Update'}}
+            </button>
+            <button mat-button [color]="'accent'"
+                [disabled]="jobCircularModalForm.pristine || jobCircularModalForm.untouched"
+                (click)="clearForm()">
+                Refresh
+            </button>
+        </div>
+    </mat-dialog-actions>
+</div>

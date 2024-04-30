@@ -1,0 +1,23 @@
+.close-icon {
+  transition: 1s ease-in-out;
+}
+
+.close-icon:hover {
+  transform: rotate(180deg);
+}
+
+.scrollable-content {
+  max-height: 500px;
+}
+
+.scrollable-content::-webkit-scrollbar {
+    display: none;
+}
+
+.ck-editor__editable {
+  min-height: 200px;
+}
+
+.mat-simple-snackbar-action .mat-button {
+  background-color: rgb(72, 236, 39) !important;
+}

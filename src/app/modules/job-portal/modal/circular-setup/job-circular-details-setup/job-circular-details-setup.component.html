@@ -1,0 +1,190 @@
+<div class="md:w-160 md:min-w-160">
+    <div class="flex justify-between">
+        <h2 class="tracking-tight text-blue-600 mt-2">Post Category Setup
+            <hr class="line mt-0 pt-0" style="border: 1px solid blue; width: 5rem;">
+        </h2>
+        <div>
+            <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+                <mat-icon class="close-icon" color="grey">close</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <mat-dialog-content class="mat-typography">
+
+        <div *ngIf="fetchingData && !foundError" class="bg-card shadow rounded overflow-hidden p-20 mt-10 flex-col"
+            style="display:flex; justify-content: center; align-items: center;">
+            <mat-spinner>Fetching Data ...</mat-spinner><br><span>Fetching Data...</span>
+        </div>
+        <div *ngIf="!fetchingData && !foundError">
+            <form [formGroup]="classSetup">
+                <mat-horizontal-stepper [linear]="true" #horizontalStepper class="scrollable-content">
+                    <mat-step [formGroupName]="'firstFormGroup'" [stepControl]="firstFormGroup" #horizontalStepperStep1
+                        errorMessage="Please Complete The Form">
+                        <ng-template matStepLabel>Post Setup</ng-template>
+                        <div class="flex flex-col w-full gap-3">
+                            <!-- Circular Title - Full Width -->
+                            <mat-form-field class="w-full">
+                                <mat-label>Circular Title</mat-label>
+                                <input matInput formControlName="circularTitle" disabled>
+                            </mat-form-field>
+
+                            <div class="flex sm:flex-row flex-col w-full gap-x-3">
+                                <!-- Left side: Post Title, Subject, Form Amount, Bank Charge -->
+                                <div class="flex flex-col w-full sm:w-1/2">
+                                    <mat-form-field class="w-full mb-3">
+                                        <mat-label>Post Title</mat-label>
+                                        <input matInput formControlName="postTitle">
+                                    </mat-form-field>
+
+                                    <mat-form-field class="w-full mb-3" *ngIf="MainDropdownData">
+                                        <mat-label>Subject</mat-label>
+                                        <mat-select formControlName="subject">
+                                            <mat-option *ngFor="let BaseCourses of MainDropdownData.BaseCourses"
+                                                [value]="BaseCourses.value">
+                                                {{BaseCourses.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <mat-form-field class="w-full mb-3">
+                                        <mat-label>Form Amount</mat-label>
+                                        <input matInput formControlName="formAmount" type="number">
+                                    </mat-form-field>
+
+                                    <mat-form-field class="w-full">
+                                        <mat-label>Bank Charge</mat-label>
+                                        <input matInput formControlName="bankCharge" type="number">
+                                    </mat-form-field>
+                                </div>
+
+                                <!-- Right side: Vacancies, Version, Exam Date & Time, Viva Date & Time -->
+                                <div class="flex flex-col w-full sm:w-1/2">
+                                    <mat-form-field class="w-full mb-3">
+                                        <mat-label>Vacancies</mat-label>
+                                        <input matInput formControlName="vacancies" type="number">
+                                    </mat-form-field>
+
+                                    <mat-form-field class="w-full mb-3" *ngIf="MainDropdownData">
+                                        <mat-label>Version</mat-label>
+                                        <mat-select formControlName="version">
+                                            <mat-option *ngFor="let Versions of MainDropdownData.Versions"
+                                                [value]="Versions.value">
+                                                {{Versions.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <mat-form-field class="w-full mb-3">
+                                        <mat-label>Exam Date & Time</mat-label>
+                                        <input matInput [formControlName]="'examDateTime'"
+                                            [owlDateTimeTrigger]="examDateTime" [owlDateTime]="examDateTime" readonly>
+                                        <owl-date-time #examDateTime></owl-date-time>
+                                    </mat-form-field>
+
+                                    <mat-form-field class="w-full">
+                                        <mat-label>Viva Date & Time</mat-label>
+                                        <input matInput [formControlName]="'vivaDateTime'"
+                                            [owlDateTimeTrigger]="vivaDateTime" [owlDateTime]="vivaDateTime" readonly>
+                                        <owl-date-time #vivaDateTime></owl-date-time>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <!-- Next Button -->
+                            <div class="flex items-center justify-center">
+                                <button class="px-8" mat-flat-button color="primary" type="button" matStepperNext>
+                                    Next
+                                </button>
+                            </div>
+                        </div>
+                    </mat-step>
+                    <mat-step [stepControl]="secondFormGroup" [formGroupName]="'secondFormGroup'"
+                        #horizontalSteppersecondFormGroup errorMessage="Please Complete The Form">
+                        <ng-template matStepLabel>Setup Parameters</ng-template>
+
+                        <div class="flex flex-col w-full gap-3">
+                            <mat-form-field class="w-1/2">
+                                <mat-label>Applicable for Gender</mat-label>
+                                <mat-select [formControlName]="'applicableforGender'">
+                                    <mat-option [value]="'M'">Male</mat-option>
+                                    <mat-option [value]="'F'">Female</mat-option>
+                                    <mat-option [value]="'B'">Both Male & Female</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <div class="flex flex-wrap -mx-3 items-start">
+                                <div class="flex flex-col w-full sm:w-1/2 px-3 mb-4">
+                                    <mat-slide-toggle [color]="'primary'" labelPosition="before"
+                                        [formControlName]="'academicQualification'">
+                                        <span class="font-medium">Academic Qualification</span>
+                                    </mat-slide-toggle>
+                                    <mat-slide-toggle [color]="'primary'" labelPosition="before"
+                                        [formControlName]="'skillRequirement'">
+                                        <span class="font-medium">Skills Requirement</span>
+                                    </mat-slide-toggle>
+                                    <mat-slide-toggle [color]="'primary'" labelPosition="before"
+                                        [formControlName]="'ProfessionalTraining'">
+                                        <span class="font-medium">Professional Training</span>
+                                    </mat-slide-toggle>
+                                    <mat-slide-toggle [color]="'primary'" labelPosition="before"
+                                        [formControlName]="'limitAge'">
+                                        <span class="font-medium">Age Limit Applicable</span>
+                                    </mat-slide-toggle>
+                                    <div class=" flex flex-col w-full">
+                                        <mat-form-field class="w-full"
+                                            *ngIf="classSetup.get('secondFormGroup.limitAge').value == true">
+                                            <mat-label>
+                                                Minimum Age Month
+                                            </mat-label>
+                                            <input matInput type="number" [formControlName]="'minimumAgeMonth'"
+                                                inputmode="numeric" pattern="[0-9]+([\.][0-9]+)?" digitOnly
+                                                [decimal]="false" [allowPaste]="true" type="text" />
+                                        </mat-form-field>
+
+                                        <mat-form-field class="w-full"
+                                            *ngIf="classSetup.get('secondFormGroup.limitAge').value == true">
+                                            <mat-label>
+                                                Maximum Age Month
+                                            </mat-label>
+                                            <input matInput type="number" [formControlName]="'maximumAgeMonth'"
+                                                inputmode="numeric" pattern="[0-9]+([\.][0-9]+)?" digitOnly
+                                                [decimal]="false" [allowPaste]="true" type="text" />
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col w-full sm:w-1/2 px-3 mb-4">
+                                    <mat-slide-toggle [color]="'primary'" labelPosition="before"
+                                        [formControlName]="'experienceRequirement'">
+                                        <span class="font-medium">Experience Requirement</span>
+                                    </mat-slide-toggle>
+                                    <mat-slide-toggle [color]="'primary'" labelPosition="before"
+                                        [formControlName]="'languageEfficiency'">
+                                        <span class="font-medium">Language Efficiency</span>
+                                    </mat-slide-toggle>
+                                    <mat-slide-toggle [color]="'primary'" labelPosition="before"
+                                        [formControlName]="'postStatus'">
+                                        <span class="font-medium">Post Status Active</span>
+                                    </mat-slide-toggle>
+                                </div>
+                            </div>
+                            <div class="flex flex-auto flex-col">
+                                <span class="mb-2">
+                                    Post Instructions
+                                </span>
+                                <ckeditor [formControlName]="'ckData'" [editor]="Editor"></ckeditor>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-center mt-4">
+                            <!-- Create -->
+                            <button class="ml-2 bg-primary text-white rounded py-2 px-4 disabled:opacity-50"
+                                [disabled]="classSetup.invalid" (click)="handleAction()">
+                                {{ data.action === 'edit' ? 'Update' : 'Save' }}
+                            </button>
+                        </div>
+                    </mat-step>
+                </mat-horizontal-stepper>
+            </form>
+        </div>
+    </mat-dialog-content>
+</div>

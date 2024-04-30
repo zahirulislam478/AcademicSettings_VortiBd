@@ -1,0 +1,43 @@
+<!-- @format -->
+
+<!-- userphoto -->
+<div class="flex flex-col flex-auto w-full">
+    <div *ngIf="userPhoto" class="flex flex-col">
+        <div class="flex items-center justify-center">
+            <img style="height: 180px; width: 180px" [src]="userImageUrl" />
+        </div>
+        <input *ngIf="!userBase64File" class="my-4" #userImage type="file" accept="image/jpeg, image/png, image/webp"
+            (change)="handleUserPhotoFileInput($event)" />
+        <div *ngIf="!userBase64File" class="flex flex-col">
+            <!-- <span *ngIf="showUni" style="color: blue">(Upload Photo In Institute Uniform)</span> -->
+            <span style="color: green">Note: Height 300px, Width 300px and max size 100kb.</span>
+        </div>
+        <div class="flex flex-row flex-wrap justify-center mt-2">
+            <button *ngIf="userBase64File" class="px-8 m-1" mat-flat-button [color]="'accent'" type="button"
+                (click)="removeUserPhotoFile()">
+                <span>Remove File</span>
+            </button>
+        </div>
+    </div>
+</div>
+<!-- signPhoto -->
+<div class="flex flex-col flex-auto w-full">
+    <div *ngIf="signPhoto" class="flex flex-col">
+        <div class="flex items-center justify-center">
+            <img style="height: 80px; width: 300px" [src]="signImageUrl" />
+        </div>
+
+        <input *ngIf="!signBase64File" class="my-4" #signImage type="file" accept="image/jpeg, image/png, image/webp"
+            (change)="handleSignPhotoFileInput($event)" />
+        <div *ngIf="!signBase64File" class="flex flex-col">
+            <span style="color: blue">(Upload Your Signature)</span>
+            <span style="color: green">Note: Height 80px, Width 300px and max size 100kb.</span>
+        </div>
+        <div class="flex flex-row flex-wrap justify-center mt-2">
+            <button *ngIf="signBase64File" class="px-8 m-1" mat-flat-button [color]="'accent'" type="button"
+                (click)="removeSignPhotoFile()">
+                <span>Remove File</span>
+            </button>
+        </div>
+    </div>
+</div>

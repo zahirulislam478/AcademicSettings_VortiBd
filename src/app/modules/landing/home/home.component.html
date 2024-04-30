@@ -1,0 +1,80 @@
+<!-- @format -->
+
+<div class="flex flex-col items-center justify-center w-full h-full">
+  <!-- <div class="w-full max-w-3xl">
+        <div class="max-w-none mx-auto prose prose-sm">
+            <img class="w-20"
+                src="assets/images/logo/logo.svg"
+                alt="Logo image">
+            <h1>Landing Module</h1>
+            <p>
+                This can be the landing or the welcome page of your application. If you have an SSR (Server Side
+                Rendering) setup, or if you don't need to have Search engine
+                visibility and optimizations, you can even use this page as your primary landing page.
+            </p>
+            <p>
+                This is a separate "module", it has its own directory and routing setup and also it's completely
+                separated from the actual application. This is also a simple example of
+                a multiple applications setup that uses the same codebase. You can have different entry points and
+                essentially have different applications within the same codebase.
+            </p>
+        </div>
+        <div>
+            <a class="mt-8"
+                mat-flat-button
+                [color]="'primary'"
+                [routerLink]="'/sign-in'">
+                <span>Launch the App</span>
+                <mat-icon class="ml-2 icon-size-5"
+                    [svgIcon]="'heroicons_solid:arrow-narrow-right'"></mat-icon>
+            </a>
+        </div>
+    </div> -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-10 mb-10 w-full min-w-0">
+    <div class="sm:col-span-2 md:col-span-4 lg:col-span-2 flex flex-col justify-center flex-auto p-6 overflow-hidden">
+      <div class="flex flex-col ml-8 md:ml-16">
+        <div class="font-semibold text-3xl md:text-5xl tracking-tighter">
+          Gateway to Easy Admission
+        </div>
+        <div>
+          <a class="mt-8"
+            mat-flat-button
+            style="background-color: #f5c227; border-radius: 10px !important"
+            [routerLink]="'/sign-in'">
+            <span style="color: #fff">CREATE AN ACCOUNT</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div
+      class="sm:col-span-2 md:col-span-4 lg:col-span-2 flex flex-col items-center flex-auto p-6 overflow-hidden mx-4">
+      <!-- <iframe [src]="safeSrc"
+        width="450"
+        height="315"
+        frameborder="0"
+        webkitallowfullscreen
+        mozallowfullscreen
+        allowfullscreen></iframe> -->
+    </div>
+  </div>
+  <div class="mb-20">
+    <landing-help-content></landing-help-content>
+  </div>
+  <div class="mb-20"
+    *ngIf="!fetchingData">
+    <landing-admission-list [cData]=cData></landing-admission-list>
+  </div>
+  <div class="mb-20"
+    *ngIf="fetchingData">
+    <div class="flex flex-col"
+      style="display:flex; justify-content: center; align-items: center;">
+      <mat-spinner>Fetching Data ...</mat-spinner><br><span>Fetching Circular Data...</span>
+    </div>
+  </div>
+  <div class="w-full">
+    <landing-banner paragraph="true"></landing-banner>
+  </div>
+  <div class="mb-20">
+    <landing-payment-method></landing-payment-method>
+  </div>
+</div>

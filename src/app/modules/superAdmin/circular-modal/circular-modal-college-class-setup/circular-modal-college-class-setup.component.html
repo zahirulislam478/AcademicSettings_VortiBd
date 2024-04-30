@@ -1,0 +1,600 @@
+<!-- <div class="flex flex-col flex-auto min-w-0">
+    <div class="flex flex-col flex-auto md:w-160 md:min-w-160 -m-6">
+        <div class="flex flex-col w-full">
+            <div class="mt-2 p-5">
+                <form [formGroup]="classSetup">
+                    <mat-stepper #stepper class="scrollable-content">
+                        <mat-step errorMessage="Please Complete The Form">
+
+                            <ng-template matStepLabel>Setup Class and Parameter</ng-template>
+
+                            <mat-form-field class="example-chip-list w-full" appearance="fill">
+                                <mat-label>Programs</mat-label>
+                                <mat-chip-list #chipGridProgram aria-label="Program selection">
+                                    <mat-chip *ngFor="let program of programs" (removed)="removeProgram(program)">
+                                        {{program.name || program}}
+                                        <button matChipRemove [attr.aria-label]="'remove ' + program">
+                                            <mat-icon>cancel</mat-icon>
+                                        </button>
+                                    </mat-chip>
+                                </mat-chip-list>
+                                <input placeholder="New Program..." #programInput
+                                    [formControl]="classSetup.get('programCtrl')" [matChipInputFor]="chipGridProgram"
+                                    [matAutocomplete]="autoProgram" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    (matChipInputTokenEnd)="addProgram($event)" />
+                                <mat-autocomplete #autoProgram="matAutocomplete"
+                                    (optionSelected)="selectedPrograms($event)">
+                                    <mat-option *ngFor="let program of filteredPrograms | async" [value]="program">
+                                        {{program.name || program}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+
+                            <mat-form-field class="example-chip-list w-full" appearance="fill">
+                                <mat-label>Groups</mat-label>
+                                <mat-chip-list #chipGridGroup aria-label="Group selection">
+                                    <mat-chip *ngFor="let group of groups" (removed)="removeGroup(group)">
+                                        {{group.name || group}}
+                                        <button matChipRemove [attr.aria-label]="'remove ' + group">
+                                            <mat-icon>cancel</mat-icon>
+                                        </button>
+                                    </mat-chip>
+                                </mat-chip-list>
+                                <input placeholder="New Group..." #groupInput
+                                    [formControl]="classSetup.get('groupCtrl')" [matChipInputFor]="chipGridGroup"
+                                    [matAutocomplete]="autoGroup" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    (matChipInputTokenEnd)="addGroup($event)" />
+                                <mat-autocomplete #autoGroup="matAutocomplete"
+                                    (optionSelected)="selectedGroups($event)">
+                                    <mat-option *ngFor="let group of filteredGroups | async" [value]="group">
+                                        {{group.name || group}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+
+                            <mat-form-field class="example-chip-list w-full" appearance="fill">
+                                <mat-label>Shift</mat-label>
+                                <mat-chip-list #chipGridShift aria-label="Shift selection">
+                                    <mat-chip *ngFor="let shift of shifts" (removed)="removeShift(shift)">
+                                        {{shift.name || shift}}
+                                        <button matChipRemove [attr.aria-label]="'remove ' + shift">
+                                            <mat-icon>cancel</mat-icon>
+                                        </button>
+                                    </mat-chip>
+                                </mat-chip-list>
+                                <input placeholder="New Shift..." #shiftInput
+                                    [formControl]="classSetup.get('shiftCtrl')" [matChipInputFor]="chipGridShift"
+                                    [matAutocomplete]="autoShift" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    (matChipInputTokenEnd)="addShift($event)" />
+                                <mat-autocomplete #autoShift="matAutocomplete"
+                                    (optionSelected)="selectedShifts($event)">
+                                    <mat-option *ngFor="let shift of filteredShifts | async" [value]="shift">
+                                        {{shift.name || shift}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+
+                            <mat-form-field class="example-chip-list w-full" appearance="fill">
+                                <mat-label>Version</mat-label>
+                                <mat-chip-list #chipGridVersion aria-label="Versino selection">
+                                    <mat-chip *ngFor="let version of versions" (removed)="removeVersion(version)">
+                                        {{version.name || version}}
+                                        <button matChipRemove [attr.aria-label]="'remove ' + version">
+                                            <mat-icon>cancel</mat-icon>
+                                        </button>
+                                    </mat-chip>
+                                </mat-chip-list>
+                                <input placeholder="New Version..." #versionInput
+                                    [formControl]="classSetup.get('versionCtrl')" [matChipInputFor]="chipGridVersion"
+                                    [matAutocomplete]="autoVersion" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    (matChipInputTokenEnd)="addVersion($event)" />
+                                <mat-autocomplete #autoVersion="matAutocomplete"
+                                    (optionSelected)="selectedVersions($event)">
+                                    <mat-option *ngFor="let version of filteredVersions | async" [value]="version">
+                                        {{version.name || version}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+
+                            <mat-form-field class="example-chip-list w-full" appearance="fill">
+                                <mat-label>Category</mat-label>
+                                <mat-chip-list #chipGridCategory aria-label="Category selection">
+                                    <mat-chip *ngFor="let category of categories" (removed)="removeCategory(category)">
+                                        {{category.name || category}}
+                                        <button matChipRemove [attr.aria-label]="'remove ' + category">
+                                            <mat-icon>cancel</mat-icon>
+                                        </button>
+                                    </mat-chip>
+                                </mat-chip-list>
+                                <input placeholder="New Category..." #categoryInput
+                                    [formControl]="classSetup.get('categoryCtrl')" [matChipInputFor]="chipGridCategory"
+                                    [matAutocomplete]="autoCategory"
+                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    (matChipInputTokenEnd)="addCategory($event)" />
+                                <mat-autocomplete #autoCategory="matAutocomplete"
+                                    (optionSelected)="selectedCategories($event)">
+                                    <mat-option *ngFor="let category of filteredCategories | async" [value]="category">
+                                        {{category.name || category}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+
+                            <mat-form-field class="example-chip-list w-full" appearance="fill">
+                                <mat-label>Session</mat-label>
+                                <mat-chip-list #chipGridSession aria-label="Session selection">
+                                    <mat-chip *ngFor="let session of sessions" (removed)="removeSession(session)">
+                                        {{session.name || session}}
+                                        <button matChipRemove [attr.aria-label]="'remove ' + session">
+                                            <mat-icon>cancel</mat-icon>
+                                        </button>
+                                    </mat-chip>
+                                </mat-chip-list>
+                                <input placeholder="New Session..." #sessionInput
+                                    [formControl]="classSetup.get('sessionCtrl')" [matChipInputFor]="chipGridSession"
+                                    [matAutocomplete]="autoSession" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    (matChipInputTokenEnd)="addSession($event)" />
+                                <mat-autocomplete #autoSession="matAutocomplete"
+                                    (optionSelected)="selectedSessions($event)">
+                                    <mat-option *ngFor="let session of filteredSessions | async" [value]="session">
+                                        {{session.name || session}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+
+                            <div>
+                                <p class="text-red-600">
+                                    <span class="font-bold">Note: </span>If there is no difference
+                                    in information you can generate circulars for class 1-8 at
+                                    once. But create separeatlely ofor 9 and 11 as the data for
+                                    the group will be different.
+                                </p>
+                            </div>
+                            <div class="flex items-center justify-center">
+                                <button class="ml-2" mat-flat-button [color]="'primary'" (click)="stepper.next()">
+                                    Save
+                                </button>
+                                <button mat-button [color]="'accent'" (click)="clearForm()">
+                                    Refresh
+                                </button>
+                            </div>
+                        </mat-step>
+
+                        <mat-step errorMessage="Please Complete The Form">
+                            <ng-template matStepLabel>Setup Class and Parameter</ng-template>
+
+                            <div class="flex w-full gap-x-3">
+                                <mat-form-field class="w-1/2">
+                                    <mat-label>Roll Type</mat-label>
+                                    <mat-select [formControlName]="'rollType'">
+                                        <mat-option></mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field class="w-1/2">
+                                    <mat-label>Payable Amount</mat-label>
+                                    <mat-select [formControlName]="'payableAmount'">
+                                        <mat-option></mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="flex w-full gap-x-3">
+                                <mat-form-field class="w-1/2">
+                                    <mat-label>Money Receipt</mat-label>
+                                    <mat-select [formControlName]="'moneyReceipt'">
+                                        <mat-option></mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field class="w-1/2">
+                                    <mat-label>Bank Charge</mat-label>
+                                    <mat-select [formControlName]="'bankCharge'">
+                                        <mat-option></mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="flex w-full gap-x-3">
+                                <mat-form-field class="w-1/2">
+                                    <mat-label color="text-red-600">Admission Form</mat-label>
+                                    <mat-select [formControlName]="'admissionForm'">
+                                        <mat-option></mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field class="w-1/2">
+                                    <mat-label>Status</mat-label>
+                                    <mat-select [formControlName]="'status'">
+                                        <mat-option></mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                           
+                            <div class="flex w-full gap-x-3">
+                                <mat-form-field class="w-1/2">
+                                    <mat-label>Gender</mat-label>
+                                    <mat-select [formControlName]="'genderCtrl'" (selectionChange)="selectedGender()">
+                                        <mat-option *ngFor="let gender of genders" [value]="gender.name">{{ gender.name
+                                            }}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div>
+                                <p>Admit Condition / Instruction On Admit Card</p>
+                            </div>
+                            <div class="flex items-center justify-center">
+                                <button class="ml-2" mat-flat-button [color]="'primary'" (click)="collegeClassSetup()">
+                                    Save
+                                </button>
+                                <button mat-button [color]="'accent'" (click)="clearForm()">
+                                    Refresh
+                                </button>
+                            </div>
+                        </mat-step>
+                    </mat-stepper>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> -->
+<div class="md:w-160 md:min-w-160">
+    <div class="flex justify-between">
+        <h2 class="tracking-tight text-blue-600 mt-2">Setup Circular For {{CircularText}}
+            <hr class="line mt-0 pt-0"
+                style="border: 1px solid blue; width: 5rem;">
+        </h2>
+        <div>
+            <button mat-icon-button
+                class="close-button"
+                [mat-dialog-close]="true">
+                <mat-icon class="close-icon"
+                    color="grey">close</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <mat-dialog-content class="mat-typography">
+
+        <div *ngIf="fetchingData && !foundError"
+            class="bg-card shadow rounded overflow-hidden p-20 mt-10 flex-col"
+            style="display:flex; justify-content: center; align-items: center;">
+            <mat-spinner>Fetching Data ...</mat-spinner><br><span>Fetching Data...</span>
+        </div>
+        <div *ngIf="!fetchingData && !foundError">
+            <form [formGroup]="classSetup">
+                <mat-horizontal-stepper [linear]="true"
+                    #horizontalStepper
+                    class="scrollable-content">
+                    <mat-step [formGroupName]="'step1'"
+                        [stepControl]="classSetup.get('step1')"
+                        #horizontalStepperStep1
+                        errorMessage="Please Complete The Form">
+
+                        <ng-template matStepLabel>Setup Class</ng-template>
+
+                        <mat-form-field class="w-full">
+                            <mat-label>
+                                Programs
+                            </mat-label>
+                            <mat-select #selectElement
+                                [formControlName]="'programCtrl'"
+                                (selectionChange)="onProgramSelectionChange_2($event)"
+                                [multiple]="IsMulti">
+                                <ng-container *ngFor="let program of programs">
+                                    <mat-option [value]="program.value">
+                                        {{program.name}}
+                                    </mat-option>
+                                </ng-container>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field class="w-full"
+                            *ngIf="hasYGroupEffect">
+                            <mat-label>
+                                Groups
+                            </mat-label>
+                            <mat-select [formControlName]="'groupCtrl'"
+                                (selectionChange)="onGroupsSelectionChange($event)"
+                                [multiple]="IsMulti">
+                                <ng-container *ngFor="let group of groups">
+                                    <mat-option [value]="group.value">
+                                        {{group.name}}
+                                    </mat-option>
+                                </ng-container>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field class="w-full">
+                            <mat-label>
+                                Shift
+                            </mat-label>
+                            <mat-select [formControlName]="'shiftCtrl'"
+                                (selectionChange)="onShiftsSelectionChange($event)"
+                                [multiple]="IsMulti">
+                                <ng-container *ngFor="let shift of shifts">
+                                    <mat-option [value]="shift.value">
+                                        {{shift.name}}
+                                    </mat-option>
+                                </ng-container>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field class="w-full">
+                            <mat-label>
+                                Version
+                            </mat-label>
+                            <mat-select [formControlName]="'versionCtrl'"
+                                (selectionChange)="onVersionSelectionChange($event)"
+                                [multiple]="IsMulti">
+                                <ng-container *ngFor="let version of versions">
+                                    <mat-option [value]="version.value">
+                                        {{version.name}}
+                                    </mat-option>
+                                </ng-container>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field class="w-full">
+                            <mat-label>
+                                Category
+                            </mat-label>
+                            <mat-select [formControlName]="'categoryCtrl'"
+                                (selectionChange)="onCategorySelectionChange($event)"
+                                [multiple]="IsMulti">
+                                <ng-container *ngFor="let category of categories">
+                                    <mat-option [value]="category.value">
+                                        {{category.name}}
+                                    </mat-option>
+                                </ng-container>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field class="w-full">
+                            <mat-label>
+                                Session
+                            </mat-label>
+                            <mat-select [formControlName]="'sessionCtrl'">
+                                <ng-container *ngFor="let session of sessions">
+                                    <mat-option [value]="session.value">
+                                        {{session.name}}
+                                    </mat-option>
+                                </ng-container>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <div>
+                            <p class="text-red-600">
+                                <span class="font-bold">Note: </span>If there is no difference
+                                in information you can generate circulars for class 1-8 at
+                                once. But create separeatlely ofor 9 and 11 as the data for
+                                the group will be different.
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-center">
+                            <!-- <button class="ml-2"
+                            mat-flat-button
+                            [color]="'primary'"
+                            (click)="stepper.next()">
+                            Save
+                        </button> -->
+                            <!-- [disabled]="horizontalStepperStep1.stepControl.pristine || horizontalStepperStep1.stepControl.invalid" -->
+                            <button class="px-8"
+                                mat-flat-button
+                                [color]="'primary'"
+                                type="button"
+                                (click)="goToNextStep()">
+                                Next
+                            </button>
+                            <!-- <button mat-button
+                                [color]="'accent'"
+                                (click)="clearForm()">
+                                Refresh
+                            </button> -->
+                        </div>
+                    </mat-step>
+
+                    <mat-step [stepControl]="classSetup.get('step2')"
+                        [formGroupName]="'step2'"
+                        #horizontalStepperStep2
+                        errorMessage="Please Complete The Form">
+                        <ng-template matStepLabel>Setup Parameters</ng-template>
+
+                        <div class="flex sm:flex-row flex-col w-full gap-x-3">
+                            <div class="flex flex-col w-full">
+
+                                <mat-form-field class="w-full">
+                                    <mat-label>Roll Type</mat-label>
+                                    <mat-select [formControlName]="'rollType'">
+                                        <ng-container *ngFor="let roll of rollCategories">
+                                            <mat-option [value]="roll.value">
+                                                {{roll.name}}
+                                            </mat-option>
+                                        </ng-container>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field class="w-full">
+                                    <mat-label>
+                                        Form Amount
+                                    </mat-label>
+                                    <input matInput
+                                        type="number"
+                                        [formControlName]="'formAmount'"
+                                        inputmode="numeric"
+                                        pattern="[0-9]+([\.][0-9]+)?"
+                                        digitOnly
+                                        [decimal]="true"
+                                        [allowPaste]="true"
+                                        type="text" />
+                                </mat-form-field>
+
+                                <mat-form-field class="w-full">
+                                    <mat-label>
+                                        Bank Charge
+                                    </mat-label>
+                                    <input matInput
+                                        type="number"
+                                        [formControlName]="'bankCharge'"
+                                        inputmode="numeric"
+                                        pattern="[0-9]+([\.][0-9]+)?"
+                                        digitOnly
+                                        [decimal]="true"
+                                        [allowPaste]="true"
+                                        type="text" />
+                                </mat-form-field>
+
+                                <mat-form-field class="w-full">
+                                    <mat-label>Applicable for Gender</mat-label>
+                                    <mat-select [formControlName]="'applicableforGender'">
+                                        <mat-option [value]="'M'">Male</mat-option>
+                                        <mat-option [value]="'F'">Female</mat-option>
+                                        <mat-option [value]="'B'">Both Male & Female</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <div class="w-full flex items-center mb-5 mt-5">
+                                    <mat-slide-toggle [color]="'primary'"
+                                        labelPosition="before"
+                                        [formControlName]="'limitAge'">
+                                        <span class="font-medium">Limit Age</span>
+                                    </mat-slide-toggle>
+                                </div>
+
+                                <div class=" flex flex-col w-full">
+                                    <mat-form-field class="w-full"
+                                        *ngIf="classSetup.get('step2.limitAge').value == true">
+                                        <mat-label>
+                                            Age on
+                                        </mat-label>
+                                        <input matInput
+                                            [formControlName]="'ageOn'"
+                                            [matDatepicker]="ageOn"
+                                            readonly
+                                            (click)="ageOn.open()" />
+                                        <mat-datepicker-toggle matSuffix
+                                            [for]="ageOn">
+                                        </mat-datepicker-toggle>
+                                        <mat-datepicker #ageOn
+                                            disabled="false"></mat-datepicker>
+                                    </mat-form-field>
+
+                                    <mat-form-field class="w-full"
+                                        *ngIf="classSetup.get('step2.limitAge').value == true">
+                                        <mat-label>
+                                            Minimum Age Month
+                                        </mat-label>
+                                        <input matInput
+                                            type="number"
+                                            [formControlName]="'minimumAgeMonth'"
+                                            inputmode="numeric"
+                                            pattern="[0-9]+([\.][0-9]+)?"
+                                            digitOnly
+                                            [decimal]="false"
+                                            [allowPaste]="true"
+                                            type="text" />
+                                    </mat-form-field>
+
+                                    <mat-form-field class="w-full"
+                                        *ngIf="classSetup.get('step2.limitAge').value == true">
+                                        <mat-label>
+                                            Maximum Age Month
+                                        </mat-label>
+                                        <input matInput
+                                            type="number"
+                                            [formControlName]="'maximumAgeMonth'"
+                                            inputmode="numeric"
+                                            pattern="[0-9]+([\.][0-9]+)?"
+                                            digitOnly
+                                            [decimal]="false"
+                                            [allowPaste]="true"
+                                            type="text" />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col w-full">
+                                <mat-form-field class="w-full">
+                                    <mat-label>
+                                        Lottery Date & Time
+                                    </mat-label>
+                                    <input matInput
+                                        [formControlName]="'lotteryDateTime'"
+                                        [owlDateTimeTrigger]="lotteryDateTime"
+                                        [owlDateTime]="lotteryDateTime"
+                                        readonly>
+                                    <owl-date-time #lotteryDateTime></owl-date-time>
+                                </mat-form-field>
+
+                                <mat-form-field class="w-full">
+                                    <mat-label>
+                                        Viva Date & Time
+                                    </mat-label>
+                                    <input matInput
+                                        [formControlName]="'vivaDateTime'"
+                                        [owlDateTimeTrigger]="vivaDateTime"
+                                        [owlDateTime]="vivaDateTime"
+                                        readonly>
+                                    <owl-date-time #vivaDateTime></owl-date-time>
+                                </mat-form-field>
+
+                                <mat-form-field class="w-full">
+                                    <mat-label>
+                                        Written Exam Date & Time
+                                    </mat-label>
+                                    <input matInput
+                                        [formControlName]="'writtenExamDateTime'"
+                                        [owlDateTimeTrigger]="writtenExamDateTime"
+                                        [owlDateTime]="writtenExamDateTime"
+                                        readonly>
+                                    <owl-date-time #writtenExamDateTime></owl-date-time>
+                                </mat-form-field>
+
+                                <mat-form-field class="w-full">
+                                    <mat-label>
+                                        Result Date & Time
+                                    </mat-label>
+                                    <input matInput
+                                        [formControlName]="'resultExamDateTime'"
+                                        [owlDateTimeTrigger]="resultExamDateTime"
+                                        [owlDateTime]="resultExamDateTime"
+                                        readonly>
+                                    <owl-date-time #resultExamDateTime></owl-date-time>
+                                </mat-form-field>
+
+                                <div class="w-full flex items-center mb-5 mt-5">
+                                    <mat-slide-toggle [color]="'primary'"
+                                        labelPosition="before"
+                                        [formControlName]="'active'">
+                                        <span class="font-medium">Active</span>
+                                    </mat-slide-toggle>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- <div>
+                        <p>Admit Condition / Instruction On Admit Card</p>
+                    </div> -->
+                        <div class="flex items-center justify-center">
+                            <button class="ml-2"
+                                mat-flat-button
+                                [color]="'primary'"
+                                [disabled]="classSetup.invalid"
+                                (click)="ActionType == 'setup' ? ClassSetup() : UpdateClassSetup()">
+                                Save
+                            </button>
+                            <!-- <button mat-button
+                                [color]="'accent'"
+                                (click)="clearForm()">
+                                Refresh
+                            </button> -->
+                        </div>
+                    </mat-step>
+                </mat-horizontal-stepper>
+
+                <!-- {{classSetup.getRawValue() | json}} -->
+            </form>
+        </div>
+    </mat-dialog-content>
+</div>

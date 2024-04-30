@@ -1,0 +1,311 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+    <div class="flex-auto p-6 sm:p-10">
+
+        <div class="w-full max-w-screen-xl mx-auto">
+
+            <div class="mb-10">
+                <div class="text-4xl font-extrabold tracking-tight leading-none">Student Information</div>
+            </div>
+
+            <div
+                class="sm:col-span-2 md:col-span-4 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
+                <!-- <div class="flex items-center justify-center mb-5 flex-col sm:flex-row"> -->
+                <div class="flex-auto sm:w-2/4 mb-5 w-full">
+                    <mat-form-field class="w-full">
+                        <mat-select (selectionChange)="instituteChange($event)"
+                            [formControl]="institutionControl"
+                            placeholder="Select Institute">
+                            <mat-option *ngFor="let Institute of schools"
+                                [value]="Institute.value">
+                                {{Institute.name.split("~")[0]}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <!-- </div> -->
+
+                <div *ngIf="circularFields != null"
+                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-x-5 mb-5">
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-x-5 mb-5">
+                        <mat-form-field class="w-full">
+                            <mat-select [formControl]="singleDropControl"
+                                placeholder="Select Criteria">
+                                <mat-option *ngFor="let item of dummu_single_drop"
+                                    [value]="item.Value">
+                                    {{item.Text}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field class="w-full">
+
+                            <input matInput
+                                [formControl]="singleTextControl"
+                                type="text" />
+                            <button mat-icon-button
+                                [color]="'primary'"
+                                type="button"
+                                (click)="SearchStudents('single')"
+                                matSuffix>
+                                <mat-icon class="icon-size-5"
+                                    [svgIcon]="'heroicons_solid:search'"></mat-icon>
+
+                            </button>
+
+                        </mat-form-field>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-x-5 mb-5">
+                        <mat-form-field class="w-full">
+                            <mat-select (selectionChange)="CircularChange($event)"
+                                [formControl]="circularControl"
+                                placeholder="Select Circular">
+                                <mat-option *ngFor="let Circular of circularFields"
+                                    [value]="Circular.CircularId">
+                                    {{Circular.CircularTitle}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                    </div>
+
+                </div>
+
+                <div *ngIf="Circular_Dropdowns != null"
+                    class="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-4 gap-x-5 mb-5">
+
+                    <mat-form-field class="w-full">
+                        <mat-label>Class</mat-label>
+                        <mat-select [formControl]="classControl"
+                            placeholder="Select Class">
+                            <mat-option *ngFor="let item of Circular_Dropdowns.Programs"
+                                [value]="item.ProgramId">
+                                {{item.ProgramName}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>Version</mat-label>
+                        <mat-select [formControl]="versionControl"
+                            placeholder="Select Version">
+                            <mat-option *ngFor="let item of Circular_Dropdowns.OpenProgramVersions"
+                                [value]="item.value">
+                                {{item.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>Group</mat-label>
+                        <mat-select [formControl]="groupControl"
+                            placeholder="Select Group">
+                            <mat-option *ngFor="let item of Circular_Dropdowns.OpenProgramGroups"
+                                [value]="item.value">
+                                {{item.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>Shift</mat-label>
+                        <mat-select [formControl]="shiftControl"
+                            placeholder="Select Shift">
+                            <mat-option *ngFor="let item of Circular_Dropdowns.OpenProgramShifts"
+                                [value]="item.value">
+                                {{item.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>Category</mat-label>
+                        <mat-select [formControl]="categoryControl"
+                            placeholder="Select Category">
+                            <mat-option *ngFor="let item of Circular_Dropdowns.OpenProgramCategories"
+                                [value]="item.value">
+                                {{item.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>Session</mat-label>
+                        <mat-select [formControl]="sessionControl"
+                            placeholder="Select Session">
+                            <mat-option *ngFor="let item of Circular_Dropdowns.OpenProgramSessions"
+                                [value]="item.value">
+                                {{item.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full"
+                        [floatLabel]="'always'">
+                        <mat-label>Date From</mat-label>
+                        <input [matDatepicker]="fromDate"
+                            matInput
+                            [max]="maxDate"
+                            [formControl]="dateFromControl"
+                            (click)="fromDate.open()"
+                            readonly>
+                        <mat-datepicker-toggle matSuffix
+                            [for]="fromDate"></mat-datepicker-toggle>
+                        <mat-datepicker #fromDate></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full"
+                        [floatLabel]="'always'">
+                        <mat-label>Date To</mat-label>
+                        <input type="text"
+                            [matDatepicker]="toDate"
+                            matInput
+                            [max]="maxDate"
+                            [formControl]="dateToControl"
+                            (click)="toDate.open()">
+                        <mat-datepicker-toggle matSuffix
+                            [for]="toDate"></mat-datepicker-toggle>
+                        <mat-datepicker #toDate></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>Transaction Status</mat-label>
+                        <mat-select [formControl]="tranStatusControl"
+                            placeholder="Select Transaction Status">
+                            <mat-option *ngFor="let item of dummy_tran_drop"
+                                [value]="item.Value">
+                                {{item.Text}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>Gender</mat-label>
+                        <mat-select [formControl]="genderControl"
+                            placeholder="Select Gender">
+                            <mat-option *ngFor="let item of dummy_gender_drop"
+                                [value]="item.Value">
+                                {{item.Text}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>Order By</mat-label>
+                        <mat-select [formControl]="orderByControl"
+                            placeholder="Select Order By">
+                            <mat-option *ngFor="let item of dummy_order_drop"
+                                [value]="item.Value">
+                                {{item.Text}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <div class="flex shrink-0 items-center justify-center">
+                        <button class="mr-4"
+                            style="background-color: #418B41;"
+                            mat-flat-button
+                            (click)="SearchStudents('all')"
+                            [color]="'accent'">
+                            <span>Search</span>
+                        </button>
+                        <button class="ml-4"
+                            style="background-color: #E49621;"
+                            mat-flat-button
+                            (click)="Refresh()"
+                            [color]="'primary'">
+                            <span>Refresh</span>
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div *ngIf="studentData.length != 0"
+                class="sm:col-span-6 flex flex-col flex-auto mt-5 p-6 bg-card shadow rounded-2xl overflow-hidden">
+                <div class="text-lg font-medium tracking-tight leading-6 truncate">Total Number of Records :
+                    {{studentData.length}}</div>
+                <div class="flex flex-col flex-auto mt-2 overflow-x-auto">
+                    <!-- <div id="wrapper1">
+                        <div id="div1" class="w-full">
+                        </div>
+                    </div>
+                    <div id="wrapper2" class="w-full">
+                        <div id="div2" class="w-full">
+                            
+                        </div>
+                    </div> -->
+                    <table style="text-align: left;"
+                        class="w-full">
+                        <thead>
+                            <tr class="my-tr">
+                                <th class="my-th">#</th>
+                                <th class="my-th">App.ID</th>
+                                <th class="my-th">Roll Prefix</th>
+                                <th class="my-th">Roll No</th>
+                                <th class="my-th">Index No</th>
+                                <th class="my-th">Name</th>
+                                <th class="my-th">Father's Name</th>
+                                <th class="my-th">Mother's Name</th>
+                                <th class="my-th">Date of Birth</th>
+                                <th class="my-th">Religion</th>
+                                <th class="my-th">Mobile</th>
+                                <th class="my-th">App. Date</th>
+                                <th class="my-th">Tran ID</th>
+                                <th class="my-th">Status</th>
+                                <th class="my-th">Program</th>
+                                <th class="my-th">Group</th>
+                                <th class="my-th">Version</th>
+                                <th class="my-th">Shift</th>
+                                <th class="my-th">Category</th>
+                                <th class="my-th">Session</th>
+                                <th class="my-th">Form Price</th>
+                                <th class="my-th">Bank Charge </th>
+                                <th class="my-th">Active</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="my-tr"
+                                *ngFor="let data of studentData; let i=index">
+                                <td class="my-th">{{i+1}}</td>
+                                <td class="my-th">{{data.TrackingNo}}</td>
+                                <td class="my-th">{{data.StudentRollPrefix}}</td>
+                                <td class="my-th">{{data.RollNo}}</td>
+                                <td class="my-th">{{data.Id}}</td>
+                                <td class="my-th">{{data.StudentName}}</td>
+                                <td class="my-th">{{data.FatherName}}</td>
+                                <td class="my-th">{{data.MotherName}}</td>
+                                <td class="my-th">{{data.BirthDate}}</td>
+                                <td class="my-th">{{data.ReligionName}}</td>
+                                <td class="my-th">{{data.ContactNo}}</td>
+                                <td class="my-th">{{data.ApplicationDate | date:'dd-MM-yyyy'}}</td>
+                                <td class="my-th">{{data.TransactionID}}</td>
+                                <td class="my-th">{{data.TranStatus}}</td>
+                                <td class="my-th">{{data.ProgramName}}</td>
+                                <td class="my-th">{{data.GroupName}}</td>
+                                <td class="my-th">{{data.VersionName}}</td>
+                                <td class="my-th">{{data.ShiftName}}</td>
+                                <td class="my-th">{{data.StudentCatName}}</td>
+                                <td class="my-th">{{data.SessionName}}</td>
+                                <td class="my-th">{{data.FormAmount}}</td>
+                                <td class="my-th">{{data.BankCharge}}</td>
+                                <td class="my-th">{{data.IsActive}}</td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- Total Number of Records : 209 Total Amount :104000 Tk Total Bank Charge :6270 Tk -->

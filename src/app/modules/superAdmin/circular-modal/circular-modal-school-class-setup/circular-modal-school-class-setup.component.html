@@ -1,0 +1,311 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <div class="flex flex-col flex-auto md:w-160 md:min-w-160 -m-6">
+        <div class="flex flex-col w-full">
+            <div class="mt-2 p-5">
+                <form [formGroup]="classSetup">
+                    <mat-stepper #stepper class="scrollable-content">
+                        <mat-step errorMessage="Please Complete The Form">
+
+                            <ng-template matStepLabel>Setup Class and Parameter</ng-template>
+
+                            <mat-form-field class="example-chip-list w-full" appearance="fill">
+                                <mat-label>Programs</mat-label>
+                                <mat-chip-list #chipGridProgram aria-label="Program selection">
+                                    <mat-chip *ngFor="let program of programs" (removed)="removeProgram(program)">
+                                        {{program.name || program}}
+                                        <button matChipRemove [attr.aria-label]="'remove ' + program">
+                                            <mat-icon>cancel</mat-icon>
+                                        </button>
+                                    </mat-chip>
+                                </mat-chip-list>
+                                <input placeholder="New Program..." #programInput
+                                    [formControl]="classSetup.get('programCtrl')" [matChipInputFor]="chipGridProgram"
+                                    [matAutocomplete]="autoProgram" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    (matChipInputTokenEnd)="addProgram($event)" />
+                                <mat-autocomplete #autoProgram="matAutocomplete"
+                                    (optionSelected)="selectedPrograms($event)">
+                                    <mat-option *ngFor="let program of filteredPrograms | async" [value]="program">
+                                        {{program.name || program}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+
+                            <fieldset [disabled]="isDisabled">
+                                <mat-form-field class="example-chip-list w-full" appearance="fill">
+                                    <mat-label>Groups</mat-label>
+                                    <mat-chip-list #chipGridGroup aria-label="Group selection">
+                                        <mat-chip *ngFor="let group of groups" (removed)="removeGroup(group)">
+                                            {{group.name || group}}
+                                            <button matChipRemove [attr.aria-label]="'remove ' + group">
+                                                <mat-icon>cancel</mat-icon>
+                                            </button>
+                                        </mat-chip>
+                                    </mat-chip-list>
+                                    <input placeholder="New Group..." #groupInput
+                                        [formControl]="classSetup.get('groupCtrl')" [matChipInputFor]="chipGridGroup"
+                                        [matAutocomplete]="autoGroup"
+                                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                        (matChipInputTokenEnd)="addGroup($event)" />
+                                    <mat-autocomplete #autoGroup="matAutocomplete"
+                                        (optionSelected)="selectedGroups($event)">
+                                        <mat-option *ngFor="let group of filteredGroups | async" [value]="group">
+                                            {{group.name || group}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                            </fieldset>
+
+
+                            <mat-form-field class="example-chip-list w-full" appearance="fill">
+                                <mat-label>Shift</mat-label>
+                                <mat-chip-list #chipGridShift aria-label="Shift selection">
+                                    <mat-chip *ngFor="let shift of shifts" (removed)="removeShift(shift)">
+                                        {{shift.name || shift}}
+                                        <button matChipRemove [attr.aria-label]="'remove ' + shift">
+                                            <mat-icon>cancel</mat-icon>
+                                        </button>
+                                    </mat-chip>
+                                </mat-chip-list>
+                                <input placeholder="New Shift..." #shiftInput
+                                    [formControl]="classSetup.get('shiftCtrl')" [matChipInputFor]="chipGridShift"
+                                    [matAutocomplete]="autoShift" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    (matChipInputTokenEnd)="addShift($event)" />
+                                <mat-autocomplete #autoShift="matAutocomplete"
+                                    (optionSelected)="selectedShifts($event)">
+                                    <mat-option *ngFor="let shift of filteredShifts | async" [value]="shift">
+                                        {{shift.name || shift}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+
+                            <mat-form-field class="example-chip-list w-full" appearance="fill">
+                                <mat-label>Version</mat-label>
+                                <mat-chip-list #chipGridVersion aria-label="Versino selection">
+                                    <mat-chip *ngFor="let version of versions" (removed)="removeVersion(version)">
+                                        {{version.name || version}}
+                                        <button matChipRemove [attr.aria-label]="'remove ' + version">
+                                            <mat-icon>cancel</mat-icon>
+                                        </button>
+                                    </mat-chip>
+                                </mat-chip-list>
+                                <input placeholder="New Version..." #versionInput
+                                    [formControl]="classSetup.get('versionCtrl')" [matChipInputFor]="chipGridVersion"
+                                    [matAutocomplete]="autoVersion" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    (matChipInputTokenEnd)="addVersion($event)" />
+                                <mat-autocomplete #autoVersion="matAutocomplete"
+                                    (optionSelected)="selectedVersions($event)">
+                                    <mat-option *ngFor="let version of filteredVersions | async" [value]="version">
+                                        {{version.name || version}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+
+                            <mat-form-field class="example-chip-list w-full" appearance="fill">
+                                <mat-label>Category</mat-label>
+                                <mat-chip-list #chipGridCategory aria-label="Category selection">
+                                    <mat-chip *ngFor="let category of categories" (removed)="removeCategory(category)">
+                                        {{category.name || category}}
+                                        <button matChipRemove [attr.aria-label]="'remove ' + category">
+                                            <mat-icon>cancel</mat-icon>
+                                        </button>
+                                    </mat-chip>
+                                </mat-chip-list>
+                                <input placeholder="New Category..." #categoryInput
+                                    [formControl]="classSetup.get('categoryCtrl')" [matChipInputFor]="chipGridCategory"
+                                    [matAutocomplete]="autoCategory"
+                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    (matChipInputTokenEnd)="addCategory($event)" />
+                                <mat-autocomplete #autoCategory="matAutocomplete"
+                                    (optionSelected)="selectedCategories($event)">
+                                    <mat-option *ngFor="let category of filteredCategories | async" [value]="category">
+                                        {{category.name || category}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+
+                            <mat-form-field class="example-chip-list w-full" appearance="fill">
+                                <mat-label>Session</mat-label>
+                                <mat-chip-list #chipGridSession aria-label="Session selection">
+                                    <mat-chip *ngFor="let session of sessions" (removed)="removeSession(session)">
+                                        {{session.name || session}}
+                                        <button matChipRemove [attr.aria-label]="'remove ' + session">
+                                            <mat-icon>cancel</mat-icon>
+                                        </button>
+                                    </mat-chip>
+                                </mat-chip-list>
+                                <input placeholder="New Session..." #sessionInput
+                                    [formControl]="classSetup.get('sessionCtrl')" [matChipInputFor]="chipGridSession"
+                                    [matAutocomplete]="autoSession" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    (matChipInputTokenEnd)="addSession($event)" />
+                                <mat-autocomplete #autoSession="matAutocomplete"
+                                    (optionSelected)="selectedSessions($event)">
+                                    <mat-option *ngFor="let session of filteredSessions | async" [value]="session">
+                                        {{session.name || session}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+
+                            <div>
+                                <p class="text-red-600">
+                                    <span class="font-bold">Note: </span>If there is no difference
+                                    in information you can generate circulars for class 1-8 at
+                                    once. But create separeatlely ofor 9 and 11 as the data for
+                                    the group will be different.
+                                </p>
+                            </div>
+                            <div class="flex items-center justify-center">
+                                <button class="ml-2" mat-flat-button [color]="'primary'" (click)="stepper.next()">
+                                    Save
+                                </button>
+                                <button mat-button [color]="'accent'" (click)="clearForm()">
+                                    Refresh
+                                </button>
+                            </div>
+                        </mat-step>
+
+                        <mat-step errorMessage="Please Complete The Form">
+                            <ng-template matStepLabel>Setup Class and Parameter</ng-template>
+
+                            <div class="flex w-full gap-x-3">
+                                <mat-form-field class="w-1/2">
+                                    <mat-label>Roll Type</mat-label>
+                                    <mat-select [formControlName]="'rollType'">
+                                        <mat-option></mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field class="w-1/2">
+                                    <mat-label>Lottery Date & Time</mat-label>
+                                    <mat-select [formControlName]="'lotteryDate'">
+                                        <mat-option></mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="flex w-full gap-x-3">
+                                <mat-form-field class="w-1/2">
+                                    <mat-label>Instant Admit Card</mat-label>
+                                    <mat-select [formControlName]="'instantAdmitCard'">
+                                        <mat-option></mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field class="w-1/2">
+                                    <mat-label>Written Exam Date & Time</mat-label>
+                                    <mat-select [formControlName]="'writtenExamdate'">
+                                        <mat-option></mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="flex w-full gap-x-3">
+                                <mat-form-field class="w-1/2">
+                                    <mat-label color="text-red-600">Admit Card Download Date</mat-label>
+                                    <mat-select [formControlName]="'admitCardDownloadDate'">
+                                        <mat-option></mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field class="w-1/2">
+                                    <mat-label>Result Date & Time</mat-label>
+                                    <mat-select [formControlName]="'resultDate'">
+                                        <mat-option></mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="flex w-full gap-x-3">
+                                <mat-form-field class="w-1/2">
+                                    <mat-label>Age Limit</mat-label>
+                                    <mat-select [formControlName]="'ageLimit'">
+                                        <mat-option></mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field class="w-1/2">
+                                    <mat-label>Viva Date & Time</mat-label>
+                                    <mat-select [formControlName]="'vivaDate'">
+                                        <mat-option></mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="flex w-full gap-x-3">
+                                <mat-form-field class="w-1/2">
+                                    <mat-label color="text-red-600">Age Conditional Date</mat-label>
+                                    <mat-select [formControlName]="'ageConditionalDate'">
+                                        <mat-option></mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field class="w-1/2">
+                                    <mat-label>Form Amount</mat-label>
+                                    <mat-select [formControlName]="'formAmount'">
+                                        <mat-option></mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="flex w-full gap-x-3">
+                                <mat-form-field class="w-1/2">
+                                    <mat-label color="text-red-600">Minimum Age</mat-label>
+                                    <mat-select [formControlName]="'minimumAge'">
+                                        <mat-option></mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2">
+                                    <mat-label>Bank Charge</mat-label>
+                                    <mat-select [formControlName]="'bankCharge'">
+                                        <mat-option></mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="flex w-full gap-x-3">
+                                <mat-form-field class="w-1/2">
+                                    <mat-label color="text-red-600">Maximum Age</mat-label>
+                                    <mat-select [formControlName]="'maximumAge'">
+                                        <mat-option></mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2">
+                                    <mat-label>Status</mat-label>
+                                    <mat-select [formControlName]="'status'">
+                                        <mat-option></mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <!-- <div class="flex w-full gap-x-3">
+                                <mat-form-field class="w-1/2">
+                                    <mat-label>Gender</mat-label>
+                                    <mat-select [formControlName]="'genderCtrl'" >
+                                        <mat-option *ngFor="let gender of genders" [value]="gender">{{ gender.name }}</mat-option> 
+                                        </mat-select>
+                                </mat-form-field>
+                            </div> -->
+                            <div class="flex w-full gap-x-3">
+                                <mat-form-field class="w-1/2">
+                                    <mat-label>Gender</mat-label>
+                                    <mat-select [formControlName]="'genderCtrl'" (selectionChange)="selectedGender()">
+                                        <mat-option *ngFor="let gender of genders" [value]="gender.name">{{ gender.name
+                                            }}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+
+                            <div>
+                                <p>Admit Condition / Instruction On Admit Card</p>
+                            </div>
+                            <div class="flex items-center justify-center">
+                                <button class="ml-2" mat-flat-button [color]="'primary'" (click)="schoolClassSetup()">
+                                    Save
+                                </button>
+                                <button mat-button [color]="'accent'" (click)="clearForm()">
+                                    Refresh
+                                </button>
+                            </div>
+                        </mat-step>
+                    </mat-stepper>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

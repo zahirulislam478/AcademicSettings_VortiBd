@@ -1,0 +1,60 @@
+<!-- @format -->
+
+<div class="flex flex-col items-center justify-center w-full h-full">
+
+  <div *ngIf="!fetchingData && cData != null"
+    class="mb-20 mt-20">
+    <div class="z-10 relative flex flex-col items-center">
+      <img class="w-56 h-56 object-fit"
+        [src]="cData.ClientLogo">
+      <div class="mt-1 text-4xl sm:text-7xl font-extrabold tracking-tight leading-tight text-center">
+        {{cData.ClientName}}
+      </div>
+      <div class="mt-3 sm:text-2xl text-center tracking-tight">
+        {{cData.ClientAddress}}
+      </div>
+      <!-- <div class="mt-3 sm:text-1xl text-center tracking-tight text-secondary">
+        {{cData.ClientAddress}}
+      </div> -->
+      <div class="flex flex-row justify-center items-center">
+        <div class="m-2">
+          <a class="mt-8"
+            mat-flat-button
+            style="background-color: #fff; border-radius: 10px !important; border: 2px solid #f5c227; "
+            (click)="openExternalLink(cData.Url)">
+            <span style="color: #f5c227">View Circular</span>
+          </a>
+        </div>
+        <div class="m-2">
+          <a class="mt-8"
+            mat-flat-button
+            style="background-color: #f5c227; border-radius: 10px !important"
+            (click)="OpenSignUp()">
+            <span style="color: #fff">Apply Now</span>
+          </a>
+        </div>
+      </div>
+      <div class="m-2">
+        <div [innerHTML]="cData.ApplyInstructions"></div>
+      </div>
+    </div>
+  </div>
+  <div class="mb-20 mt-20"
+    *ngIf="fetchingData">
+    <div class="flex flex-col"
+      style="display:flex; justify-content: center; align-items: center;">
+      <mat-spinner>Fetching Data ...</mat-spinner><br><span>Fetching Circular Data...</span>
+    </div>
+  </div>
+  <div class="mb-20 mt-20"
+    *ngIf="fetchingData && cData == null">
+    <div class="mt-3 sm:text-2xl text-center tracking-tight">
+      Circular Data Could Not Be Loaded</div>
+  </div>
+  <div class="mb-20">
+    <landing-help-content></landing-help-content>
+  </div>
+  <div class="mb-20">
+    <landing-payment-method></landing-payment-method>
+  </div>
+</div>

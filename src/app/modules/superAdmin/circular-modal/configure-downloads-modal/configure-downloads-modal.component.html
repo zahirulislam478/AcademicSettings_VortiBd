@@ -1,0 +1,249 @@
+<div class="md:w-200 md:min-w-200">
+    <div class="flex justify-between">
+        <h2 class="tracking-tight text-blue-600 mt-2">Configure Downloads
+            <hr class="line mt-0 pt-0"
+                style="border: 1px solid blue; width: 5rem;">
+        </h2>
+        <div>
+            <button mat-icon-button
+                class="close-button"
+                [mat-dialog-close]="true">
+                <mat-icon class="close-icon"
+                    color="grey">close</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <mat-dialog-content class="mat-typography">
+        <form class="space-y-2"
+            [formGroup]="configureDownloadsForm"
+            #schoolCircularNgForm="ngForm">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-x-3">
+                <div class="flex flex-col">
+                    <div class="w-full flex items-center mb-5 h-10">
+                        <mat-slide-toggle [color]="'primary'"
+                            labelPosition="before"
+                            [formControlName]="'smsCtrl'">
+                            <span class="font-medium">SMS</span>
+                        </mat-slide-toggle>
+                    </div>
+
+                    <mat-form-field class="w-full"
+                        *ngIf="configureDownloadsForm.get('smsCtrl').value">
+                        <mat-label>SMS Template</mat-label>
+                        <input matInput
+                            [formControlName]="'smsTemplateCtrl'"
+                            type="text" />
+                    </mat-form-field>
+
+                    <div class="w-full flex items-center mb-5 h-10">
+                        <mat-slide-toggle [color]="'primary'"
+                            labelPosition="before"
+                            [formControlName]="'instantAdmitCardCtrl'">
+                            <span class="font-medium">Instant Admit Card</span>
+                        </mat-slide-toggle>
+                    </div>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>
+                            Admit Card Available For Download
+                        </mat-label>
+                        <input matInput
+                            readonly
+                            [formControlName]="'admitCardDateCtrl'"
+                            [owlDateTimeTrigger]="admitCardDateCtrl"
+                            [owlDateTime]="admitCardDateCtrl">
+                        <owl-date-time #admitCardDateCtrl></owl-date-time>
+                    </mat-form-field>
+
+                    <div class="w-full flex items-center mb-5 h-10">
+                        <mat-slide-toggle [color]="'primary'"
+                            labelPosition="before"
+                            [formControlName]="'examScheduleCtrl'">
+                            <span class="font-medium">Exam Schedule On Admit Card</span>
+                        </mat-slide-toggle>
+                    </div>
+
+                    <mat-form-field class="w-full"
+                        >
+                        <mat-label>Admit Card Template</mat-label>
+                        <input matInput
+                            [formControlName]="'instantAdmitCardTemplateCtrl'"
+                            type="text" />
+                    </mat-form-field>
+
+                    <div class="flex flex-auto">
+                        <div class="w-full items-center mb-5 h-10">
+                            <mat-slide-toggle [color]="'primary'"
+                                labelPosition="before"
+                                [formControlName]="'signature'">
+                                <span class="font-medium">Admit Card Signature</span>
+                            </mat-slide-toggle>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-auto"
+                        *ngIf="configureDownloadsForm.get('signature').value == true">
+                        <div class="w-full flex-auto">
+                            <mat-form-field class="w-full">
+                                <mat-label>Signature Label</mat-label>
+                                <input matInput
+                                    [formControlName]="'signatureLabel'">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-auto"
+                        *ngIf="configureDownloadsForm.get('signature').value == true">
+                        <div class="w-full flex-auto">
+                            <div class="flex flex-col justify-start">
+
+                                <div class="mb-1 font-medium">
+                                    <mat-label>Select Signature Image</mat-label>
+                                </div>
+                                <div class="flex flex-col flex-auto w-full">
+                                    <div class="flex flex-col">
+                                        <div class="flex items-center justify-start">
+                                            <img style="height: 80px; width: 300px"
+                                                [src]="signImageUrl" />
+                                        </div>
+
+                                        <input *ngIf="!signBase64File"
+                                            class="my-4"
+                                            #signImage
+                                            type="file"
+                                            accept="image/jpeg, image/png, image/webp"
+                                            (change)="handleSignPhotoFileInput($event)" />
+                                        <div *ngIf="!signBase64File"
+                                            class="flex flex-col">
+                                            <!-- <span style="color: blue">(Upload Your Signature)</span> -->
+                                            <span style="color: green">Note: Height 80px, Width 300px and max size
+                                                100kb.</span>
+                                        </div>
+                                        <div class="flex flex-row flex-wrap justify-center mt-2">
+                                            <button *ngIf="signBase64File"
+                                                class="px-8 m-1"
+                                                mat-flat-button
+                                                [color]="'accent'"
+                                                type="button"
+                                                (click)="removeSignPhotoFile()">
+                                                <span>Remove File</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="flex flex-col">
+
+                    <div class="w-full flex items-center mb-5 h-10">
+                        <mat-slide-toggle [color]="'primary'"
+                            labelPosition="before"
+                            [formControlName]="'admissionFormCtrl'">
+                            <span class="font-medium">Admission Form</span>
+                        </mat-slide-toggle>
+                    </div>
+
+                    <mat-form-field class="w-full"
+                        *ngIf="configureDownloadsForm.get('admissionFormCtrl').value">
+                        <mat-label>Admission Form Template</mat-label>
+                        <input matInput
+                            [formControlName]="'admissionFormTemplateCtrl'"
+                            type="text" />
+                    </mat-form-field>
+
+                    <div class="w-full flex items-center mb-5 h-10">
+                        <mat-slide-toggle [color]="'primary'"
+                            labelPosition="before"
+                            [formControlName]="'idCardCtrl'">
+                            <span class="font-medium">Id Card</span>
+                        </mat-slide-toggle>
+                    </div>
+
+                    <mat-form-field class="w-full"
+                        *ngIf="configureDownloadsForm.get('idCardCtrl').value">
+                        <mat-label>Id Card Template</mat-label>
+                        <input matInput
+                            [formControlName]="'idCardTemplateCtrl'"
+                            type="text" />
+                    </mat-form-field>
+
+                    <div class="w-full flex items-center mb-5 h-10">
+                        <mat-slide-toggle [color]="'primary'"
+                            labelPosition="before"
+                            [formControlName]="'transportCardCtrl'">
+                            <span class="font-medium">Transport Card</span>
+                        </mat-slide-toggle>
+                    </div>
+
+                    <mat-form-field class="w-full"
+                        *ngIf="configureDownloadsForm.get('transportCardCtrl').value">
+                        <mat-label> Transport Card Template</mat-label>
+                        <input matInput
+                            [formControlName]="'transportCardTemplateCtrl'"
+                            type="text" />
+                    </mat-form-field>
+
+                    <div class="w-full flex items-center mb-5 h-10">
+                        <mat-slide-toggle [color]="'primary'"
+                            labelPosition="before"
+                            [formControlName]="'libraryCardCtrl'">
+                            <span class="font-medium">Library Card</span>
+                        </mat-slide-toggle>
+                    </div>
+
+                    <mat-form-field class="w-full"
+                        *ngIf="configureDownloadsForm.get('libraryCardCtrl').value">
+                        <mat-label> Library Card Template</mat-label>
+                        <input matInput
+                            [formControlName]="'libraryCardTemplateCtrl'"
+                            type="text" />
+                    </mat-form-field>
+
+                </div>
+            </div>
+
+            <div class="flex flex-auto flex-col">
+                <div class="w-full flex-auto">
+                    <mat-form-field class="w-full">
+                        <mat-label>Apply Declaration</mat-label>
+                        <textarea matInput
+                            [rows]="2"
+                            [formControlName]="'applyDeclaration'"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="flex flex-auto flex-col">
+                <span class="mb-2">
+                    Admit Card Instruction
+                </span>
+                <ckeditor [formControlName]="'ckData'"
+                    [editor]="Editor"></ckeditor>
+            </div>
+
+        </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="justify-end">
+        <div class="flex items-center justify-center">
+            <button class="ml-2"
+                mat-flat-button
+                [color]="'primary'"
+                [disabled]="configureDownloadsForm.invalid"
+                (click)="saveConfigure()">
+                Save
+            </button>
+            <button mat-button
+                [color]="'amber'"
+                [disabled]="configureDownloadsForm.pristine || configureDownloadsForm.untouched"
+                (click)="clearForm()">
+                Refresh
+            </button>
+        </div>
+    </mat-dialog-actions>
+</div>

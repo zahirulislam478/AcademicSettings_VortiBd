@@ -1,0 +1,24 @@
+<!-- @format -->
+
+<div class="bg--cover bg-yellow-400 w-full px-20 py-20 mb-10 mx-auto"
+  style="background-image: url(assets/images/ui/4.png)">
+  <!-- Current Page Name -->
+  <div *ngIf="data" class="lg:flex flex-row justify-between text-white font-extrabold text-2xl">
+    <h1>{{ data }}</h1>
+    <p><a routerLink="/home" class="hover:text-black">Home</a> / {{ data }}</p>
+  </div>
+  <!-- Home Page Pricing -->
+  <div *ngIf="paragraph" class="text-center text-white">
+    <h1 class="mt-2 text-2xl sm:text-7xl font-extrabold tracking-tight leading-tight">
+      Pricing
+    </h1>
+    <p class="mb-8 leading-relaxed text-2xl">
+      Our pricing is simple, we don't charge onetime or yearly registration fee
+      form the institute. We chrge BDT 30 for per applicaiton form the
+      applicant.
+    </p>
+    <a [href]="'tel:' +'01771008181'" style="text-decoration:none; color: #f5c227" type="button"
+      class="inline-block rounded border border-white bg-white px-12 py-3 text-sm font-semibold text-black hover:bg-transparent hover:text-white focus:outline-none focus:ring active:text-indigo-500">+88
+      01771008181</a>
+  </div>
+</div>

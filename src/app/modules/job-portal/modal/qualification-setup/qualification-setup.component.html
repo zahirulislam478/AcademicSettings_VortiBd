@@ -1,0 +1,28 @@
+<mat-dialog-content class="md:w-200 md:min-w-200">
+    <div class="flex justify-between">
+        <h2 class="tracking-tight text-blue-600 mt-2">Qualification Info Setup
+            <hr class="line mt-0 pt-0" style="border: 1px solid blue; width: 5rem;">
+        </h2>
+        <div>
+            <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+                <mat-icon class="close-icon" color="grey">close</mat-icon>
+            </button>
+        </div>
+    </div>
+    <mat-accordion>
+        <mat-expansion-panel *ngFor="let item of data">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    CircularDetailsId: {{item.CircularDetailsId}}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div *ngFor="let exam of item.ExamLevelViewModel">
+                <p>Exam Level: {{getReadableExamName(exam.ExamName)}}</p>
+                <mat-slide-toggle [(ngModel)]="exam.Active">Active</mat-slide-toggle>
+                <mat-slide-toggle [(ngModel)]="exam.Required">Required</mat-slide-toggle>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <button mat-button (click)="saveData()">Save</button>
+</mat-dialog-content>

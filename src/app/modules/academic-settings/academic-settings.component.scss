@@ -1,0 +1,36 @@
+.my-th {
+    padding-top: 0.6666667em;
+    padding-right: 1em;
+    padding-bottom: 0.6666667em;
+}
+
+.my-th-tl {
+    padding-top: 0.6666667em;
+    padding-right: 1em;  
+    padding-bottom: 0.6666667em;
+    text-align: left;
+}
+
+.my-tr {
+    border-bottom-width: 1px;
+    border-bottom-color: #e2e8f0
+}
+
+.mat-simple-snackbar-action .mat-button {
+    background-color: rgb(72, 236, 39) !important;
+}
+
+.full-width-tabs {
+    width: 100%; /* Make the tab group fill the available width */
+  }
+  
+  .mat-tab-label {
+    min-width: unset !important; /* Remove the minimum width constraint for each tab */
+    flex: 1 1 auto; /* Allow tabs to grow and shrink as needed */
+    font-size: 12px; /* Adjust the font size as needed */
+  }
+  
+  .mat-tab-label-content {
+    padding: -8px; /* Adjust the padding as needed */
+  }
+  

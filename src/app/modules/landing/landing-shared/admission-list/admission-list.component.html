@@ -1,0 +1,87 @@
+<div class="flex flex-col flex-auto w-full">
+
+    <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
+        <div class="flex items-center justify-center w-full mb-10">
+            <div class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate">
+                {{cData != null ? 'Admission Going On' : 'No On Going Admission Data Found'}}
+            </div>
+        </div>
+
+        <div *ngIf="cData != null"
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full min-w-0 mt-10">
+            <ng-container *ngFor="let client of cData">
+                <div class="flex flex-col flex-auto items-center bg-card shadow rounded-2xl overflow-hidden">
+
+                    <div class="flex flex-col flex-auto w-full p-8 text-center">
+                        <div class="w-32 h-32 mx-auto rounded-full overflow-hidden">
+                            <img class="w-full h-full object-cover"
+                                [src]="client.ClientLogo">
+                        </div>
+                        <div class="mt-6 font-medium text-lg">{{client.ClientName}}</div>
+                        <div class="font-medium">{{client.CircularTitle}}</div>
+                    </div>
+
+                    <div class="flex items-center w-full border-t divide-x">
+                        <a *ngIf="client.CircularInfo.length == 1"
+                            class="flex flex-auto items-center justify-center py-4 hover:bg-hover"
+                            (click)="GoToIns(client, client.CircularInfo[0])">
+                            <mat-icon class="icon-size-5 text-hint"
+                                [svgIcon]="'heroicons_solid:cursor-click'"></mat-icon>
+                            <span class="ml-2">Apply Now</span>
+                        </a>
+                        <a *ngIf="client.CircularInfo.length > 1"
+                            class="flex flex-auto items-center justify-center py-4 hover:bg-hover"
+                            [matMenuTriggerFor]="menu">
+                            <mat-icon class="icon-size-5 text-hint"
+                                [svgIcon]="'heroicons_solid:cursor-click'"></mat-icon>
+                            <span class="ml-2">Apply Now</span>
+                        </a>
+                        <mat-menu #menu="matMenu">
+                            <ng-container *ngFor="let child of client.CircularInfo">
+                                <button mat-menu-item
+                                    (click)="GoToIns(client, child)">
+                                    <span class="text-base break-all">{{child.CircularTitle}}</span>
+                                </button>
+                            </ng-container>
+                        </mat-menu>
+
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+
+    </div>
+    <!-- <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
+        <div class="flex items-center justify-center w-full mb-10">
+            <div class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate">
+                Apply from School Website
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full min-w-0 mt-10">
+            <ng-container *ngFor="let client of data">
+                <div class="flex flex-col flex-auto items-center bg-card shadow rounded-2xl overflow-hidden">
+
+                    <div class="flex flex-col flex-auto w-full p-8 text-center">
+                        <div class="w-32 h-32 mx-auto rounded-full overflow-hidden">
+                            <img class="w-full h-full object-cover"
+                                [src]="client.ClientLogo">
+                        </div>
+                        <div class="mt-6 font-medium">{{client.ClientName}}</div>
+                    </div>
+
+                    <div class="flex items-center w-full border-t divide-x">
+                        <a class="flex flex-auto items-center justify-center py-4 hover:bg-hover"
+                            [routerLink]="['/sign-up']">
+                            <mat-icon class="icon-size-5 text-hint"
+                                [svgIcon]="'heroicons_solid:cursor-click'"></mat-icon>
+                            <span class="ml-2">Apply Now</span>
+                        </a>
+
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+
+    </div> -->
+</div>

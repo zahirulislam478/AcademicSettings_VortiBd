@@ -1,0 +1,56 @@
+<div class="md:w-160 md:min-w-160">
+    <div class="mb-6 flex justify-between">
+        <h2 class="tracking-tight text-blue-600 mt-2">Roll Configure
+            <hr class="line mt-0 pt-0"
+                style="border: 1px solid blue; width: 5rem;">
+        </h2>
+        <div>
+            <button mat-icon-button
+                class="close-button"
+                [mat-dialog-close]="true">
+                <mat-icon class="close-icon"
+                    color="grey">close</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <mat-dialog-content class="mat-typography">
+        <form class="space-y-3"
+            [formGroup]="rollForm"
+            #rollNgForm="ngForm">
+            <mat-form-field class="fuse-mat-textarea w-full"
+                [floatLabel]="'always'">
+                <mat-label>
+                    Roll Starts From
+                </mat-label>
+                <input matInput
+                    type="text"
+                    [formControlName]="'startCtrl'"
+                    inputmode="numeric"
+                    pattern="[0-9]+([\.][0-9]+)?"
+                    digitOnly
+                    [decimal]="false"
+                    [allowPaste]="true"
+                    placeholder="--Input Roll no. e.g: 1000-20000--">
+            </mat-form-field>
+        </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="justify-end">
+        <div class="flex items-center justify-center">
+            <button class="ml-2"
+                mat-flat-button
+                [color]="'primary'"
+                [disabled]="rollForm.pristine"
+                (click)="SaveRollStart()">
+                Save
+            </button>
+            <button mat-button
+                [color]="'accent'"
+                [disabled]="rollForm.pristine || rollForm.untouched"
+                (click)="clearForm()">
+                Refresh
+            </button>
+        </div>
+    </mat-dialog-actions>
+</div>

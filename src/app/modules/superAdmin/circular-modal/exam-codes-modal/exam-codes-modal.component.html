@@ -1,0 +1,138 @@
+<div class="md:w-200 md:min-w-200">
+    <div class="flex justify-between">
+        <h2 class="tracking-tight text-blue-600 mt-2">Previous Academic Information Configuration
+            <hr class="line mt-0 pt-0"
+                style="border: 1px solid blue; width: 5rem;">
+        </h2>
+        <div>
+            <button mat-icon-button
+                class="close-button"
+                [mat-dialog-close]="true">
+                <mat-icon class="close-icon"
+                    color="grey">close</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <mat-dialog-content class="mat-typography">
+        <div *ngIf="BatchListData.length > 0"
+            class="sm:col-span-2 md:col-span-4 flex flex-col flex-auto py-6 overflow-hidden">
+            <div class="px-3 overflow-y-hidden"
+                cdkScrollable>
+                <table class="w-full table"
+                    [formGroup]="BMI_MainForm">
+                    <thead>
+                        <tr class="my-tr">
+                            <th class="my-th-tl">Program</th>
+                            <th class="my-th-tl">NA</th>
+                            <th class="my-th-tl">PSC</th>
+                            <th class="my-th-tl">JSC/JDC</th>
+                            <th class="my-th-tl">SSC/Dakhil</th>
+                            <th class="my-th-tl">HSC/Alim</th>
+                            <th class="my-th-tl">Hons/Fazil</th>
+                            <th class="my-th-tl">Masters/Kamil</th>
+                            <th class="my-th-tl">BBA</th>
+                            <th class="my-th-tl">MBA</th>
+                        </tr>
+                    </thead>
+                    <tbody formArrayName="items"
+                        *ngFor="let item of BMI_MainForm_Items().controls; let i=index">
+                        <tr [formGroupName]="i"
+                            class="my-tr">
+                            <td class="my-th"
+                                style="max-width: 30px;">
+                                <input type="text"
+                                    formControlName="ProgramName"
+                                    readonly
+                                    style="border: 0; text-align: left;">
+                            </td>
+
+                            <td class="my-th">
+                                <div class="flex items-center justify-center">
+                                    <mat-checkbox class="mb-1"
+                                        [color]="'primary'"
+                                        [formControlName]="'NA'"></mat-checkbox>
+                                </div>
+                            </td>
+
+                            <td class="my-th">
+                                <div class="flex items-center justify-center">
+                                    <mat-checkbox class="mb-1"
+                                        [color]="'primary'"
+                                        [formControlName]="'PSC'"></mat-checkbox>
+                                </div>
+                            </td>
+                            <td class="my-th">
+                                <div class="flex items-center justify-center">
+                                    <mat-checkbox class="mb-1"
+                                        [color]="'primary'"
+                                        [formControlName]="'JSC_JDC'"></mat-checkbox>
+                                </div>
+                            </td>
+                            <td class="my-th">
+                                <div class="flex items-center justify-center">
+                                    <mat-checkbox class="mb-1"
+                                        [color]="'primary'"
+                                        [formControlName]="'SSC_Dakhil'"></mat-checkbox>
+                                </div>
+                            </td>
+                            <td class="my-th">
+                                <div class="flex items-center justify-center">
+                                    <mat-checkbox class="mb-1"
+                                        [color]="'primary'"
+                                        [formControlName]="'HSC_Alim'"></mat-checkbox>
+                                </div>
+                            </td>
+                            <td class="my-th">
+                                <div class="flex items-center justify-center">
+                                    <mat-checkbox class="mb-1"
+                                        [color]="'primary'"
+                                        [formControlName]="'Hons_Fazil'"></mat-checkbox>
+                                </div>
+                            </td>
+                            <td class="my-th">
+                                <div class="flex items-center justify-center">
+                                    <mat-checkbox class="mb-1"
+                                        [color]="'primary'"
+                                        [formControlName]="'Masters_Kamil'"></mat-checkbox>
+                                </div>
+                            </td>
+                            <td class="my-th">
+                                <div class="flex items-center justify-center">
+                                    <mat-checkbox class="mb-1"
+                                        [color]="'primary'"
+                                        [formControlName]="'BBA'"></mat-checkbox>
+                                </div>
+                            </td>
+                            <td class="my-th">
+                                <div class="flex items-center justify-center">
+                                    <mat-checkbox class="mb-1"
+                                        [color]="'primary'"
+                                        [formControlName]="'MBA'"></mat-checkbox>
+                                </div>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="justify-end">
+        <div class="flex items-center justify-center">
+            <button class="ml-2"
+                mat-flat-button
+                [color]="'primary'"
+                (click)="saveConfigure()">
+                Save
+            </button>
+            <button mat-button
+                [color]="'amber'"
+                [mat-dialog-close]="true">
+                Close
+            </button>
+        </div>
+    </mat-dialog-actions>
+</div>

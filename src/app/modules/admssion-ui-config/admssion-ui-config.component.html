@@ -1,0 +1,316 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+    <div class="flex-auto p-6 sm:p-10">
+
+        <div class="w-full max-w-screen-xl mx-auto">
+
+            <div class="mb-10">
+                <div class="text-4xl font-extrabold tracking-tight leading-none">Admission Form UI Configuration</div>
+            </div>
+
+            <div
+                class="sm:col-span-2 md:col-span-4 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
+                <div class="flex items-center mb-5">
+                    <div class="flex-auto">
+                        <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript  w-full ">
+                            <mat-select [formControl]="ClientDropDownControl"
+                                placeholder="Select Institute">
+                                <mat-option *ngFor="let Institute of institutes"
+                                    [value]="Institute.value">
+                                    {{Institute.name.split("~")[0]}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- <button class="ml-4"
+                        mat-stroked-button
+                        [color]="'primary'">
+                        <span class="inline-flex items-center">
+
+                            <mat-icon>content_copy</mat-icon> &nbsp;
+                            <ng-container>
+                                <span>Clone</span>
+                            </ng-container>
+
+                        </span>
+                    </button> -->
+                </div>
+
+                <div class="flex flex-auto flex-wrap">
+                    <div class="flex flex-col w-full">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-x-5">
+
+                            <div class="flex flex-col gap-x-5">
+                                <mat-form-field class="w-full">
+                                    <mat-label>Key Name</mat-label>
+                                    <input matInput
+                                        [formControl]="KeyNameControl">
+                                </mat-form-field>
+                                <mat-form-field class="w-full">
+                                    <mat-label>Label Name</mat-label>
+                                    <input matInput
+                                        [formControl]="LabelNameControl">
+                                </mat-form-field>
+                                <mat-form-field class="w-full">
+                                    <mat-label>Eims Name</mat-label>
+                                    <input matInput
+                                        [formControl]="EimsNameControl">
+                                </mat-form-field>
+                                <mat-form-field class="w-full">
+                                    <mat-label>Db Name</mat-label>
+                                    <input matInput
+                                        [formControl]="DbNameControl">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="flex flex-col gap-x-5">
+
+                                <div class="w-full flex flex-col"
+                                    style="height: 88px;">
+                                    <span class="mb-1">Circular</span>
+                                    <mat-radio-group class="flex flex-row flex-wrap"
+                                        [color]="'primary'"
+                                        [formControl]="CirculatDropDownControl">
+                                        <ng-container *ngFor="let category of cir_rd">
+                                            <mat-radio-button class="m-2"
+                                                [color]="'primary'"
+                                                [value]="category.value">
+                                                <span class="whitespace-normal">
+                                                    {{category.name}}
+                                                </span>
+                                            </mat-radio-button>
+                                        </ng-container>
+                                    </mat-radio-group>
+                                </div>
+
+                                <div class="w-full flex flex-col"
+                                    style="height: 88px;">
+                                    <span class="mb-1"> Visibility</span>
+                                    <mat-radio-group class="flex flex-row flex-wrap"
+                                        [color]="'primary'"
+                                        [formControl]="VisibilityDropDownControl">
+                                        <ng-container *ngFor="let category of vis_rd">
+                                            <mat-radio-button class="m-2"
+                                                [color]="'primary'"
+                                                [value]="category.value">
+                                                <span class="whitespace-normal">
+                                                    {{category.name}}
+                                                </span>
+                                            </mat-radio-button>
+                                        </ng-container>
+                                    </mat-radio-group>
+                                </div>
+
+                                <div class="w-full flex flex-col"
+                                    style="height: 88px;">
+                                    <span class="mb-1">Required</span>
+                                    <mat-radio-group class="flex flex-row flex-wrap"
+                                        [color]="'primary'"
+                                        [formControl]="RequiredDropDownControl">
+                                        <ng-container *ngFor="let category of req_rd">
+                                            <mat-radio-button class="m-2"
+                                                [color]="'primary'"
+                                                [value]="category.value">
+                                                <span class="whitespace-normal">
+                                                    {{category.name}}
+                                                </span>
+                                            </mat-radio-button>
+                                        </ng-container>
+                                    </mat-radio-group>
+                                </div>
+
+                                <div class="w-full flex flex-col"
+                                    style="height: 88px;">
+                                    <span class="mb-1">Status</span>
+                                    <mat-radio-group class="flex flex-row flex-wrap"
+                                        [color]="'primary'"
+                                        [formControl]="StatusDropDownControl">
+                                        <ng-container *ngFor="let category of sta_rd">
+                                            <mat-radio-button class="m-2"
+                                                [color]="'primary'"
+                                                [value]="category.value">
+                                                <span class="whitespace-normal">
+                                                    {{category.name}}
+                                                </span>
+                                            </mat-radio-button>
+                                        </ng-container>
+                                    </mat-radio-group>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="w-full flex flex-col"
+                            style="height: 88px;">
+                            <span class="mb-1">From Name</span>
+                            <mat-radio-group class="flex flex-row flex-wrap"
+                                [color]="'primary'"
+                                [formControl]="FromDropDownControl">
+                                <ng-container *ngFor="let category of form_rd">
+                                    <mat-radio-button class="m-2"
+                                        [color]="'primary'"
+                                        [value]="category.value">
+                                        <span class="whitespace-normal">
+                                            {{category.name}}
+                                        </span>
+                                    </mat-radio-button>
+                                </ng-container>
+                            </mat-radio-group>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="flex flex-row items-center justify-center pt-4">
+                    <button style="background-color: #418B41;"
+                        mat-flat-button
+                        (click)="SearchUiConfigs()"
+                        [color]="'accent'">
+                        <span>Search</span>
+                    </button>
+                    <!-- <button class="ml-4"
+                        style="background-color: #E49621;"
+                        mat-flat-button
+                        [color]="'primary'">
+                        <span>Refresh</span>
+                    </button> -->
+
+                </div>
+                <div *ngIf="BatchListData.length > 0"
+                    class="sm:col-span-2 md:col-span-4 flex flex-col flex-auto py-6 overflow-hidden">
+                    <div class="px-3 overflow-y-hidden"
+                        cdkScrollable>
+                        <table class="w-full table"
+                            [formGroup]="BMI_MainForm">
+                            <thead>
+                                <tr class="my-tr">
+                                    <th class="my-th-tl">SL</th>
+                                    <th class="my-th-tl"
+                                        style="max-width: 30px;">S/C</th>
+                                    <th class="my-th-tl">DB Field</th>
+                                    <th class="my-th-tl">DB EMIS</th>
+                                    <th class="my-th-tl"
+                                        style="min-width: 200px;">Key Name</th>
+                                    <th class="my-th-tl"
+                                        style="min-width: 200px;">Label Name</th>
+                                    <th class="my-th-tl">Visible</th>
+                                    <th class="my-th-tl">Required</th>
+                                    <th class="my-th-tl">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody formArrayName="items"
+                                *ngFor="let item of BMI_MainForm_Items().controls; let i=index">
+                                <tr [formGroupName]="i"
+                                    class="my-tr">
+                                    <td class="my-th">
+                                        {{i+1}}
+                                    </td>
+                                    <td class="my-th"
+                                        style="max-width: 30px;">
+
+                                        <input type="text"
+                                            formControlName="ProgramType"
+                                            readonly
+                                            style="border: 0; text-align: left;">
+
+                                    </td>
+
+                                    <td class="my-th">
+
+                                        <input type="text"
+                                            formControlName="DBField"
+                                            readonly
+                                            style="border: 0; text-align: left; max-width: 100px;">
+
+                                    </td>
+
+                                    <td class="my-th">
+
+                                        <input type="text"
+                                            formControlName="EIMSField"
+                                            readonly
+                                            style="border: 0; text-align: left; max-width: 100px;">
+
+                                    </td>
+
+                                    <td class="my-th break-all">
+
+                                        <input type="text"
+                                            class="break-all"
+                                            formControlName="KeyName"
+                                            readonly
+                                            style="border: 0; text-align: left; min-width: 200px;">
+
+                                    </td>
+
+                                    <td class="my-th">
+
+                                        <mat-form-field appearance="fill"
+                                            style="margin-bottom: -1.25em; min-width: 200px;"
+                                            class="w-full">
+                                            <input matInput
+                                                [formControlName]="'LabelName'">
+                                        </mat-form-field>
+
+                                    </td>
+
+                                    <td class="my-th">
+                                        <div class="flex items-center justify-center">
+                                            <mat-slide-toggle [color]="'primary'"
+                                                [formControlName]="'Visible'">
+                                            </mat-slide-toggle>
+                                        </div>
+                                    </td>
+
+                                    <td class="my-th">
+                                        <div class="flex items-center justify-center">
+                                            <mat-slide-toggle [color]="'primary'"
+                                                [formControlName]="'Required'">
+                                            </mat-slide-toggle>
+                                        </div>
+                                    </td>
+
+                                    <td class="my-th">
+                                        <div class="flex items-center justify-center">
+
+                                            <button mat-icon-button
+                                                [matMenuTriggerFor]="menu">
+                                                <mat-icon class="text-secondary">reorder</mat-icon>
+                                            </button>
+                                            <mat-menu #menu="matMenu">
+                                                <button mat-menu-item
+                                                    (click)="UpdateSingle(item)">
+                                                    <mat-icon>save</mat-icon>
+                                                    <span class="text-base">Update</span>
+                                                </button>
+                                                <button mat-menu-item
+                                                    *ngIf="item.controls['ClientId'].value!=0"
+                                                    (click)="ResetSingle(item)">
+                                                    <mat-icon>update</mat-icon>
+                                                    <span class="text-base">Reset Default
+                                                    </span>
+                                                </button>
+                                            </mat-menu>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- <div>
+
+            </div> -->
+
+        </div>
+    </div>
+
+</div>

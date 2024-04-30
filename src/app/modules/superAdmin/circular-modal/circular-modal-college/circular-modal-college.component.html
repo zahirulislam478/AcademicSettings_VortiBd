@@ -1,0 +1,419 @@
+<!-- <div class="flex flex-col flex-auto min-w-0">
+    <div class="flex flex-col flex-auto md:w-160 md:min-w-160 -m-6">
+        <div class="flex flex-col w-full max-w-4xl">
+            <div class="mt-2 p-5">
+
+                <form class="space-y-2"
+                    [formGroup]="collegeCircularModalForm"
+                    #supportNgForm="ngForm">
+
+                    <div class="mb-6 flex justify-between">
+                        <div class="tracking-tight text-blue-600 pb-2">Setup Circular For College
+                            <hr class="line mt-0 pt-0"
+                                style="border: 1px solid blue; width: 5rem;">
+                        </div>
+                        <div>
+                            <button mat-icon-button
+                                class="close-button"
+                                [mat-dialog-close]="true">
+                                <mat-icon class="close-icon"
+                                    color="grey">close</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div *ngIf="collegeCircularTypeForm">
+
+                        <div class="flex justify-center">
+                            <mat-radio-group aria-label="college-radio-group"
+                                style="display: flex !important; flex-direction: column !important; margin: 15px 0 !important; align-items: flex-start !important;"
+                                [color]="'primary'"
+                                class="college-radio-group"
+                                [formControlName]="'collegeCircularType'">
+                                <mat-radio-button style="margin: 5px !important;"
+                                    [value]="'StrictMode'"
+                                    (click)="collegeStrictMode()">
+                                    <p class="text-black">Strict Mode</p>
+                                    <p class="text-blue-700 pt-1">Note: Admissoin of students selected by the board</p>
+                                </mat-radio-button>
+                                <mat-radio-button style="margin: 5px !important;"
+                                    [disabled]="true"
+                                    [value]="'FlexibleMode'">
+                                    <p class="text-gray-500">Flexible Mode</p>
+                                    <p class="text-gray-500 pt-1">Note: through this process, students will fulfill
+                                        their requirements in advance</p>
+                                </mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+
+                        <div class="flex items-center justify-center">
+                            <button class="ml-2"
+                                mat-flat-button
+                                [color]="'primary'"
+                                [disabled]="!isCollegeStrictModeSelected"
+                                type="collegeSubmit"
+                                (click)="next()"> Next </button>
+                            <button mat-button
+                                [color]="'accent'"
+                                [disabled]="!isCollegeStrictModeSelected"
+                                (click)="clearForm()"> Refresh </button>
+                        </div>
+
+                    </div>
+
+                    <div *ngIf="iscollegeStrictModeCircular">
+
+                        <div class="flex flex-auto">
+                            <mat-form-field class="w-full"
+                                [floatLabel]="'always'">
+                                <mat-label>Institute Name</mat-label>
+                                <mat-select (selectionChange)="circularInstituteChange($event)"
+                                    [formControlName]="'instituteName'"
+                                    placeholder="--Select Institute--">
+                                    <mat-option *ngFor="let Institute of college"
+                                        [value]="Institute.value">
+                                        {{Institute.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="flex flex-auto">
+                            <mat-form-field class="w-full">
+                                <mat-label>Circular Name</mat-label>
+                                <input matInput
+                                    [formControlName]="'circularName'">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-x-5">
+
+                            <div class="flex flex-auto">
+                                <mat-form-field class="w-full"
+                                    [floatLabel]="'always'">
+                                    <mat-label>Open Date</mat-label>
+                                    <input [matDatepicker]="openDate"
+                                        placeholder="Choose a date"
+                                        matInput
+                                        [formControlName]="'openDate'"
+                                        (click)="openDate.open()"
+                                        readonly>
+                                    <mat-datepicker-toggle matSuffix
+                                        [for]="openDate"></mat-datepicker-toggle>
+                                    <mat-datepicker #openDate></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="flex flex-auto">
+                                <mat-form-field class="w-full"
+                                    [floatLabel]="'always'">
+                                    <mat-label>Close Date</mat-label>
+                                    <input type="text"
+                                        [matDatepicker]="closeDate"
+                                        placeholder="Choose a date"
+                                        matInput
+                                        [formControlName]="'closeDate'"
+                                        (click)="closeDate.open()">
+                                    <mat-datepicker-toggle matSuffix
+                                        [for]="closeDate"></mat-datepicker-toggle>
+                                    <mat-datepicker #closeDate></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-auto">
+                            <mat-form-field class="fuse-mat-textarea w-full"
+                                [floatLabel]="'always'">
+                                <mat-label>Circular URL</mat-label>
+                                <input matInput
+                                    [formControlName]="'circularUrl'"
+                                    placeholder="--Input Circular URL/PDF/JPG File--">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="flex items-center justify-center">
+                            <button class="ml-2"
+                                mat-flat-button
+                                [color]="'primary'"
+                                [disabled]="collegeCircularModalForm.pristine"
+                                (click)="createCollegeCircular()">
+                                Save
+                            </button>
+                            <button mat-button
+                                [color]="'accent'"
+                                [disabled]="collegeCircularModalForm.pristine || collegeCircularModalForm.untouched"
+                                (click)="clearForm()">
+                                Refresh
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div class="md:w-160 md:min-w-160">
+    <div class="flex justify-between">
+        <h2 class="tracking-tight text-blue-600 mt-2">Setup Circular For College
+            <hr class="line mt-0 pt-0"
+                style="border: 1px solid blue; width: 5rem;">
+        </h2>
+        <div>
+            <button mat-icon-button
+                class="close-button"
+                [mat-dialog-close]="true">
+                <mat-icon class="close-icon"
+                    color="grey">close</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <mat-dialog-content class="mat-typography">
+        <form class="space-y-2"
+            [formGroup]="collegeCircularModalForm"
+            #supportNgForm="ngForm">
+
+            <div *ngIf="collegeCircularTypeForm">
+
+                <div class="flex items-center justify-start">
+                    <mat-radio-group aria-label="college-radio-group"
+                        style="display: flex !important; flex-direction: column !important; align-items: flex-start !important;"
+                        [color]="'primary'"
+                        class="college-radio-group"
+                        [formControlName]="'collegeCircularType'">
+                        <mat-radio-button style="margin: 5px !important;"
+                            [value]="'StrictMode'"
+                            (click)="collegeModeSelect()">
+                            <span class="text-black">Strict Mode</span>
+                            <p class="text-blue-700 pt-1">Note: Admissoin of students selected by the board</p>
+                        </mat-radio-button>
+                        <mat-radio-button style="margin: 5px !important;"
+                            [value]="'FlexibleMode'"
+                            (click)="collegeModeSelect()">
+                            <span class="text-black">Flexible Mode</span>
+                            <p class="text-gray-700 pt-1">Note: through this process, students will fulfill
+                                their requirements in advance</p>
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+
+            </div>
+
+            <div *ngIf="iscollegeStrictModeCircular">
+
+                <div class="flex flex-auto">
+                    <mat-form-field class="w-full"
+                        [floatLabel]="'always'">
+                        <mat-label>Institute Name</mat-label>
+                        <mat-select (selectionChange)="circularInstituteChange($event)"
+                            [formControlName]="'instituteName'"
+                            placeholder="--Select Institute--">
+                            <mat-option *ngFor="let Institute of college"
+                                [value]="Institute.value">
+                                {{Institute.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="flex flex-auto">
+                    <mat-form-field class="w-full">
+                        <mat-label>Circular Name</mat-label>
+                        <input matInput
+                            [formControlName]="'circularName'">
+                    </mat-form-field>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-x-5">
+                    <div class="flex flex-auto">
+                        <mat-form-field class="w-full"
+                            [floatLabel]="'always'">
+                            <mat-label>Open Date</mat-label>
+                            <input [matDatepicker]="openDate"
+                                placeholder="Choose a date"
+                                matInput
+                                [formControlName]="'openDate'"
+                                (dateChange)="fromDateChanged($event)"
+                                (click)="openDate.open()"
+                                readonly>
+                            <mat-datepicker-toggle matSuffix
+                                [for]="openDate"></mat-datepicker-toggle>
+                            <mat-datepicker #openDate></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+    
+                    <div class="flex flex-auto">
+                        <mat-form-field class="w-full"
+                            [floatLabel]="'always'">
+                            <mat-label>Close Date</mat-label>
+                            <input [matDatepicker]="closeDate"
+                                placeholder="Choose a date"
+                                matInput
+                                [formControlName]="'closeDate'"
+                                [min]="collegeCircularModalForm.get('openDate').value"
+                                (click)="closeDate.open()"
+                                readonly>
+                            <mat-datepicker-toggle matSuffix
+                                [for]="closeDate"></mat-datepicker-toggle>
+                            <mat-datepicker #closeDate></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="flex flex-auto">
+                    <mat-form-field class="fuse-mat-textarea w-full"
+                        [floatLabel]="'always'">
+                        <mat-label>Circular URL</mat-label>
+                        <input matInput
+                            [formControlName]="'circularUrl'"
+                            placeholder="--Input Circular URL/PDF/JPG File--">
+                    </mat-form-field>
+                </div>
+
+                <div class="flex flex-auto">
+                    <mat-form-field class="fuse-mat-textarea w-full"
+                        [floatLabel]="'always'">
+                        <mat-label>Video URL</mat-label>
+                        <input matInput
+                            [formControlName]="'videoUrl'"
+                            placeholder="--Input Youtube Video--">
+                    </mat-form-field>
+                </div>
+    
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-x-5">
+                    <div class="flex flex-auto">
+                        <div class="w-full items-center mb-5 h-10">
+                            <mat-slide-toggle [color]="'primary'"
+                                labelPosition="before"
+                                [formControlName]="'uniqStudentBirthID'">
+                                <span class="font-medium">Is Student Birth ID Unique</span>
+                            </mat-slide-toggle>
+                        </div>
+                    </div>
+                    <div class="flex flex-auto"
+                        *ngIf="CircularData != null">
+                        <div class="w-full items-center mb-5 h-10">
+                            <mat-slide-toggle [color]="'primary'"
+                                labelPosition="before"
+                                [formControlName]="'status'">
+                                <span class="font-medium">Is Active</span>
+                            </mat-slide-toggle>
+                        </div>
+                    </div>
+                    <!-- <div class="flex flex-auto">
+                        <div class="w-full items-center mb-5 h-10">
+                            <mat-slide-toggle [color]="'primary'"
+                                labelPosition="before"
+                                [formControlName]="'signature'">
+                                <span class="font-medium">Admmit Card Signature</span>
+                            </mat-slide-toggle>
+                        </div>
+                    </div>
+                    <div class="flex flex-auto"
+                        *ngIf="collegeCircularModalForm.get('signature').value == true">
+                        <div class="w-full flex-auto">
+                            <mat-form-field class="w-full">
+                                <mat-label>Signature Label</mat-label>
+                                <input matInput
+                                    [formControlName]="'signatureLabel'">
+                            </mat-form-field>
+                        </div>
+                    </div>
+    
+                    <div class="flex flex-auto"
+                        *ngIf="collegeCircularModalForm.get('signature').value == true">
+                        <div class="w-full flex-auto">
+                            <div class="flex flex-col justify-start">
+    
+                                <div class="mb-1 font-medium">
+                                    <mat-label>Select Signature Image</mat-label>
+                                </div>
+                                <div class="flex flex-col flex-auto w-full">
+                                    <div class="flex flex-col">
+                                        <div class="flex items-center justify-center">
+                                            <img style="height: 80px; width: 300px"
+                                                [src]="signImageUrl" />
+                                        </div>
+    
+                                        <input *ngIf="!signBase64File"
+                                            class="my-4"
+                                            #signImage
+                                            type="file"
+                                            accept="image/jpeg, image/png, image/webp"
+                                            (change)="handleSignPhotoFileInput($event)" />
+                                        <div *ngIf="!signBase64File"
+                                            class="flex flex-col">
+                                            <span style="color: green">Note: Height 80px, Width 300px and max size
+                                                100kb.</span>
+                                        </div>
+                                        <div class="flex flex-row flex-wrap justify-center mt-2">
+                                            <button *ngIf="signBase64File"
+                                                class="px-8 m-1"
+                                                mat-flat-button
+                                                [color]="'accent'"
+                                                type="button"
+                                                (click)="removeSignPhotoFile()">
+                                                <span>Remove File</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+    
+                        </div>
+                    </div> -->
+                </div>
+    
+
+                <div class="flex flex-auto flex-col">
+                    <span class="mb-2">
+                        Apply Instruction
+                    </span>
+                    <ckeditor [formControlName]="'ckData'"
+                        [editor]="Editor"></ckeditor>
+                </div>
+
+            </div>
+        </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="justify-end">
+        <div *ngIf="collegeCircularTypeForm">
+
+            <div class="flex items-center justify-center">
+                <button class="ml-2"
+                    mat-flat-button
+                    [color]="'primary'"
+                    [disabled]="!isCollegeModeSelected"
+                    (click)="next()">
+                    Next
+                </button>
+                <button mat-button
+                    [color]="'accent'"
+                    [disabled]="!isCollegeModeSelected"
+                    (click)="clearForm()">
+                    Refresh
+                </button>
+            </div>
+
+        </div>
+
+        <div *ngIf="iscollegeStrictModeCircular">
+            <div class="flex items-center justify-end">
+                <button class="ml-2"
+                    mat-flat-button
+                    [color]="'primary'"
+                    [disabled]="!collegeCircularModalForm.valid"
+                    (click)="this.circular == null ? createCollegeCircular() : UpdateCollegeCircular()">
+                    {{this.circular == null ? 'Save' : 'Update'}}
+                </button>
+                <button mat-button
+                    [color]="'accent'"
+                    (click)="ClearMainForm()">
+                    Refresh
+                </button>
+            </div>
+        </div>
+    </mat-dialog-actions>
+</div>

@@ -1,0 +1,77 @@
+<!-- @format -->
+
+<div class="relative flex flex-col flex-auto min-w-0 overflow-hidden mx-10" *ngFor="let item of formTopSectionData">
+    <fuse-card class="flex flex-col items-center mt-5 sm:mt-5 w-full md:max-w-full overflow-x-auto overflow-y-hidden">
+        <div
+            class="grid grid-flow-row auto-rows-fr lg:grid-flow-col lg:auto-cols-fr lg:max-w-none divide-y lg:divide-y-0 lg:divide-x divide-black shadow-lg lg:shadow-none border-r lg:border-r-0 bg-card rounded-l lg:rounded-l-none">
+            <div class="flex flex-col bg-slate-800">
+                <div class="flex flex-col justify-center p-4 pt-3 lg:py-8">
+                    <div class="lg:block">
+                        <img [src]="item.url" alt="" class="rounded-full object-scale-down h-30 w-30" />
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col">
+                <div class="flex flex-col justify-center p-4 pt-3 lg:py-8">
+                    <div class="text-xl lg:text-2xl font-extrabold">
+                        {{ item.collegeName }}
+                    </div>
+                    <div class="flex items-baseline lg:mt-4 ">
+                        <div class="lg:block text-lg ">
+                            {{ item.motto }}
+                        </div>
+                    </div>
+                    <div class="mt-1 lg:mt-3 text-sm lg:text-base">
+                        <div class="lg:block text-lg">
+                            {{ item.schoolCode }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col">
+                <div class="flex flex-col justify-center p-4 pt-3 lg:py-8">
+                    <div class="text-xl lg:text-2xl font-extrabold">Applying For</div>
+                    <div class="flex items-baseline lg:mt-4">
+                        <div class="lg:block text-lg">
+                            {{ item.class }}
+                        </div>
+                    </div>
+                    <div class="flex items-baseline lg:mt-4">
+                        <div class="lg:block text-lg">
+                            {{ item.session }}
+                        </div>
+                    </div>
+                    <div class="flex items-baseline lg:mt-4">
+                        <div class="lg:block text-lg">
+                            {{ item.sscGroup }}
+                        </div>
+                    </div>
+                    <div class="mt-1 lg:mt-3 text-sm lg:text-base">
+                        <div class="lg:block text-lg">
+                            {{ item.sscRoll }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col bg-slate-800 text-white">
+                <div class="flex flex-col justify-center p-4 pt-3 lg:py-8">
+                    <div class="flex items-baseline lg:mt-4">
+                        <div class="lg:block text-lg">
+                            <mat-icon>phone</mat-icon>
+                            <span class="font-extrabold">Helpline</span> <br />
+                            09643 224488
+                        </div>
+                    </div>
+                    <div class="flex items-baseline lg:mt-4">
+                        <div class="lg:block text-lg">
+                            <mat-icon>phone</mat-icon>
+                            <span class="font-extrabold">College IT</span> <br />{{
+                            item.collegeIT
+                            }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fuse-card>
+</div>

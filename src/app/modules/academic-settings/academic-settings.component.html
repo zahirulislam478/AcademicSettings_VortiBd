@@ -1,0 +1,246 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <div class="flex-auto p-6 sm:p-10">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <div class="mb-5">
+                <div class="text-4xl font-extrabold tracking-tight leading-none">Academic Settings</div>
+            </div>
+            <div
+                class="sm:col-span-2 md:col-span-4 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
+                <div class="flex items-center">
+                    <div class="flex-auto">
+                        <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript w-full">
+                            <mat-select [formControl]="ClientDropDownControl" placeholder="Select Institute"
+                                (selectionChange)="onClientSelectionChange()">
+                                <mat-option *ngFor="let Institute of institutes" [value]="Institute.value">
+                                    {{ Institute.name.split("~")[0] }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <mat-card style="margin-top: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px;">
+                    <div style="flex-grow: 1;"></div>
+                    <button class="mb-5" mat-raised-button color="primary" style="margin-top: 10px;"
+                        (click)="syncTSP()">Sync
+                        Tsp</button>
+                </div>
+                <mat-tab-group [disablePagination]="true" class="full-width-tabs"
+                    (selectedTabChange)="onTabChange($event)">
+                    <mat-tab *ngFor="let tab of tabs" [label]="tab">
+                        <ng-template matTabContent>
+                            <table class="w-full table" *ngIf="tab === 'Program'">
+                                <thead>
+                                    <tr class="my-tr">
+                                        <th class="my-th">SL</th>
+                                        <th class="my-th">Code</th>
+                                        <th class="my-th">Program</th>
+                                        <th class="my-th">Short Name</th>
+                                        <th class="my-th">EIMS ID</th>
+                                        <th class="my-th">Duration</th>
+                                        <th class="my-th">Status</th>
+                                        <th class="my-th">P.Type</th>
+                                        <th class="my-th">G.Effect</th>
+                                        <th class="my-th">Session</th>
+                                        <th class="my-th">Term</th>
+                                        <th class="my-th">Curriculum Descryption</th>
+                                        <th class="my-th">Last B.Exam</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let row of programTableData; let i = index" class="my-tr">
+                                        <td class="my-th">{{ i + 1 }}</td>
+                                        <td class="my-th">{{ row.Code }}</td>
+                                        <td class="my-th">{{ row.Program }}</td>
+                                        <td class="my-th">{{ row['Short Name'] }}</td>
+                                        <td class="my-th">{{ row['EIMS ID'] }}</td>
+                                        <td class="my-th">{{ row.Duration }}</td>
+                                        <td class="my-th">{{ row.Status }}</td>
+                                        <td class="my-th">{{ row['P.Type'] }}</td>
+                                        <td class="my-th">{{ row['G.Effect'] }}</td>
+                                        <td class="my-th">{{ row.Session }}</td>
+                                        <td class="my-th">{{ row.Term }}</td>
+                                        <td class="my-th">{{ row['Curriculum Description'] }}</td>
+                                        <td class="my-th">{{ row['Last B.Exam'] }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="w-full table" *ngIf="tab === 'Version'">
+                                <thead>
+                                    <tr class="my-tr">
+                                        <th class="my-th">SL</th>
+                                        <th class="my-th">Version Code</th>
+                                        <th class="my-th">Version Name</th>
+                                        <!-- <th class="my-th">Action</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let row of versionTableData; let i = index" class="my-tr">
+                                        <td class="my-td">{{ row.SL }}</td>
+                                        <td class="my-td">{{ row.VersionCode }}</td>
+                                        <td class="my-td">{{ row.VersionName }}</td>
+                                        <!-- <td class="my-td">{{ row.Action }}</td> -->
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <table class="w-full table" *ngIf="tab === 'Group'">
+                                <!-- Group Table -->
+                                <thead>
+                                    <tr class="my-tr">
+                                        <th class="my-th">SL</th>
+                                        <th class="my-th">Group Code</th>
+                                        <th class="my-th">Group Name</th>
+                                        <!-- <th class="my-th">Action</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let row of groupTableData; let i = index" class="my-tr">
+                                        <td class="my-td">{{ row.SL }}</td>
+                                        <td class="my-td">{{ row.GroupCode }}</td>
+                                        <td class="my-td">{{ row.GroupName }}</td>
+                                        <!-- <td class="my-td">{{ row.Action }}</td> -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="w-full table" *ngIf="tab === 'Shift'">
+                                <!-- Shift Table -->
+                                <thead>
+                                    <tr class="my-tr">
+                                        <th class="my-th">SL</th>
+                                        <th class="my-th">Shift Code</th>
+                                        <th class="my-th">Shift Name</th>
+                                        <!-- <th class="my-th">Action</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let row of shiftTableData; let i = index" class="my-tr">
+                                        <td class="my-td">{{ row.SL }}</td>
+                                        <td class="my-td">{{ row.ShiftCode }}</td>
+                                        <td class="my-td">{{ row.ShiftName }}</td>
+                                        <!-- <td class="my-td">{{ row.Action }}</td> -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="w-full table" *ngIf="tab === 'Session'">
+                                <!-- Session Table -->
+                                <thead>
+                                    <tr class="my-tr">
+                                        <th class="my-th">SL</th>
+                                        <th class="my-th">Session Code</th>
+                                        <th class="my-th">Session Name</th>
+                                        <!-- <th class="my-th">Action</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let row of sessionTableData; let i = index" class="my-tr">
+                                        <td class="my-td">{{ row.SL }}</td>
+                                        <td class="my-td">{{ row.SessionCode }}</td>
+                                        <td class="my-td">{{ row.SessionName }}</td>
+                                        <!-- <td class="my-td">{{ row.Action }}</td> -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="w-full table" *ngIf="tab === 'Section'">
+                                <!-- Section Table -->
+                                <thead>
+                                    <tr class="my-tr">
+                                        <th class="my-th">SL</th>
+                                        <th class="my-th">Section Code</th>
+                                        <th class="my-th">Section Name</th>
+                                        <!-- <th class="my-th">Action</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let row of sectionTableData; let i = index" class="my-tr">
+                                        <td class="my-td">{{ row.SL }}</td>
+                                        <td class="my-td">{{ row.SectionCode }}</td>
+                                        <td class="my-td">{{ row.SectionName }}</td>
+                                        <!-- <td class="my-td">{{ row.Action }}</td> -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="w-full table" *ngIf="tab === 'Category'">
+                                <!-- Category Table -->
+                                <thead>
+                                    <tr class="my-tr">
+                                        <th class="my-th">SL</th>
+                                        <th class="my-th">Category Code</th>
+                                        <th class="my-th">Category Name</th>
+                                        <!-- <th class="my-th">Action</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let row of categoryTableData; let i = index" class="my-tr">
+                                        <td class="my-td">{{ row.SL }}</td>
+                                        <td class="my-td">{{ row.CategoryCode }}</td>
+                                        <td class="my-td">{{ row.CategoryName }}</td>
+                                        <!-- <td class="my-td">{{ row.Action }}</td> -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="w-full table" *ngIf="tab === 'Subject'">
+                                <!-- Subject Table -->
+                                <thead>
+                                    <tr class="my-tr">
+                                        <th class="my-th">SL</th>
+                                        <th class="my-th">Subject Code</th>
+                                        <th class="my-th">Subject Name</th>
+                                        <!-- <th class="my-th">Action</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let row of subjectTableData; let i = index" class="my-tr">
+                                        <td class="my-td">{{ row.SL }}</td>
+                                        <td class="my-td">{{ row.SubjectCode }}</td>
+                                        <td class="my-td">{{ row.SubjectName }}</td>
+                                        <!-- <td class="my-td">{{ row.Action }}</td> -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="w-full table" *ngIf="tab === 'Class'">
+                                <!-- Class Table -->
+                                <thead>
+                                    <tr class="my-tr">
+                                        <th class="my-th">SL</th>
+                                        <th class="my-th">Class Code</th>
+                                        <th class="my-th">Class Name</th>
+                                        <!-- <th class="my-th">Action</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let row of classTableData; let i = index" class="my-tr">
+                                        <td class="my-td">{{ row.SL }}</td>
+                                        <td class="my-td">{{ row.ClassCode }}</td>
+                                        <td class="my-td">{{ row.ClassName }}</td>
+                                        <!-- <td class="my-td">{{ row.Action }}</td> -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="w-full table" *ngIf="tab === 'House'">
+                                <!-- House Table -->
+                                <thead>
+                                    <tr class="my-tr">
+                                        <th class="my-th">SL</th>
+                                        <th class="my-th">House Code</th>
+                                        <th class="my-th">House Name</th>
+                                        <!-- <th class="my-th">Action</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let row of houseTableData; let i = index" class="my-tr">
+                                        <td class="my-td">{{ row.SL }}</td>
+                                        <td class="my-td">{{ row.HouseCode }}</td>
+                                        <td class="my-td">{{ row.HouseName }}</td>
+                                        <!-- <td class="my-td">{{ row.Action }}</td> -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </ng-template>
+                    </mat-tab>
+                </mat-tab-group>
+            </mat-card>
+        </div>
+    </div>
+</div>

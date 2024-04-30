@@ -1,0 +1,272 @@
+/** @format */
+
+.candidate-image {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+mat-option {
+  display: flex;
+  align-items: center;
+}
+
+.mat-simple-snackbar-action .mat-button {
+  background-color: rgb(72, 236, 39) !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+@media screen and (min-width: 1280px) {
+  .dashboardBgLg {
+    background: linear-gradient(to right,
+        #111827 0%,
+        #111827 70%,
+        #ffffff 30%,
+        #ffffff 100%);
+  }
+}
+
+@media screen and (max-width: 1279px) {
+  .dashboardBgSm {
+    background: linear-gradient(to right,
+        #111827 0%,
+        #111827 50%,
+        #ffffff 50%,
+        #ffffff 100%);
+  }
+}
+
+.center-align-table .mat-cell,
+.center-align-table .mat-header-cell {
+  align-items: center !important;
+}
+
+.header__img {
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.skeleton {
+  height: 150px;
+  padding: 15px;
+  width: 100%;
+  display: flex;
+}
+
+.skeleton .square {
+  background: rgba(130, 130, 130, 0.2);
+  background: -webkit-gradient(linear,
+      left top,
+      right top,
+      color-stop(8%, rgba(130, 130, 130, 0.2)),
+      color-stop(18%, rgba(130, 130, 130, 0.3)),
+      color-stop(33%, rgba(130, 130, 130, 0.2)));
+  background: linear-gradient(to right,
+      rgba(130, 130, 130, 0.2) 8%,
+      rgba(130, 130, 130, 0.3) 18%,
+      rgba(130, 130, 130, 0.2) 33%);
+  background-size: 800px 100px;
+  animation: wave-squares 2s infinite ease-out;
+}
+
+.skeleton .line {
+  height: 12px;
+  margin-bottom: 6px;
+  border-radius: 2px;
+  background: rgba(130, 130, 130, 0.2);
+  background: -webkit-gradient(linear,
+      left top,
+      right top,
+      color-stop(8%, rgba(130, 130, 130, 0.2)),
+      color-stop(18%, rgba(130, 130, 130, 0.3)),
+      color-stop(33%, rgba(130, 130, 130, 0.2)));
+  background: linear-gradient(to right,
+      rgba(130, 130, 130, 0.2) 8%,
+      rgba(130, 130, 130, 0.3) 18%,
+      rgba(130, 130, 130, 0.2) 33%);
+  background-size: 800px 100px;
+  animation: wave-lines 2s infinite ease-out;
+}
+
+.skeleton-right {
+  flex: 1;
+}
+
+.skeleton-left {
+  flex: 2;
+}
+
+.flex1 {
+  flex: 1;
+}
+
+.flex2 {
+  flex: 2;
+}
+
+.skeleton .line:last-child {
+  margin-bottom: 0;
+}
+
+.h8 {
+  height: 8px !important;
+}
+
+.h10 {
+  height: 10px !important;
+}
+
+.h12 {
+  height: 12px !important;
+}
+
+.h15 {
+  height: 15px !important;
+}
+
+.h17 {
+  height: 17px !important;
+}
+
+.h20 {
+  height: 20px !important;
+}
+
+.h25 {
+  height: 25px !important;
+}
+
+.w25 {
+  width: 25% !important;
+}
+
+.w40 {
+  width: 40% !important;
+}
+
+.w50 {
+  width: 50% !important;
+}
+
+.w75 {
+  width: 75% !important;
+}
+
+.m10 {
+  margin-bottom: 10px !important;
+}
+
+.circle {
+  border-radius: 50% !important;
+  height: 80px !important;
+  width: 80px;
+}
+
+@keyframes wave-lines {
+  0% {
+    background-position: -468px 0;
+  }
+
+  100% {
+    background-position: 468px 0;
+  }
+}
+
+@keyframes wave-squares {
+  0% {
+    background-position: -468px 0;
+  }
+
+  100% {
+    background-position: 468px 0;
+  }
+}
+
+.table-center {
+  text-align: center;
+}
+
+.custom-table th {
+  background-color: #c4c4c426 !important;
+  color: #000 !important;
+  font-weight: bold !important;
+  box-shadow: 0 5px 0 0 rgba(0, 0, 0, 0.1) !important;
+}
+
+.no-bottom-border {
+  border-bottom: 0 !important;
+}
+
+.fisrtColumn {
+  float: left;
+  width: 50%;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.fisrtColumn td {
+  margin-left: 20px;
+  text-align: left;
+}
+
+.secondColumn {
+  float: left;
+  width: 50%;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.secondColumn td:nth-child(2) {
+  margin-left: 20px;
+  text-align: left;
+}
+
+.img-cell {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50% !important;
+}
+
+.disabled-field {
+  position: relative;
+
+  .mat-form-field-wrapper {
+    pointer-events: none;
+  }
+
+  .disabled-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: silver;
+    opacity: 0.5;
+  }
+}
+
+.my-th {
+  padding-top: 0.6666667em;
+  padding-right: 1em;
+  padding-bottom: 0.6666667em;
+}
+
+.my-th-tl {
+  padding-top: 0.6666667em;
+  padding-right: 1em;
+  padding-bottom: 0.6666667em;
+  text-align: left;
+}
+
+.my-tr {
+  border-bottom-width: 1px;
+  border-bottom-color: #e2e8f0
+}

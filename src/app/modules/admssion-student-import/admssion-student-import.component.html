@@ -1,0 +1,109 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+    <div class="flex-auto p-6 sm:p-10">
+
+        <div class="w-full max-w-screen-xl mx-auto">
+
+            <div class="mb-10">
+                <div class="text-4xl font-extrabold tracking-tight leading-none">Student Data Import</div>
+            </div>
+            <div
+                class="sm:col-span-2 md:col-span-4 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
+                <!-- <div class="flex items-center justify-center mb-5 flex-col sm:flex-row"> -->
+                <div class="flex-auto sm:w-2/4 mb-5 w-full">
+                    <mat-form-field class="w-full">
+                        <mat-label>Select Institute</mat-label>
+                        <mat-select (selectionChange)="instituteChange($event)"
+                            [formControl]="institutionControl"
+                            placeholder="Select Institute">
+                            <mat-option *ngFor="let Institute of schools"
+                                [value]="Institute.value">
+                                {{Institute.name.split("~")[0]}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                </div>
+
+                <!-- </div> -->
+
+                <div *ngIf="circularFields != null"
+                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-x-5 mb-5">
+
+                    <div class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-x-5 mb-5">
+                        <mat-form-field class="w-full">
+                            <mat-label>Select Circular</mat-label>
+                            <mat-select [formControl]="circularControl"
+                                placeholder="Select Circular">
+                                <mat-option *ngFor="let Circular of circularFields"
+                                    [value]="Circular.CircularId">
+                                    {{Circular.CircularTitle}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                    </div>
+
+                    <div class="flex flex-col justify-start">
+
+                        <div class="mb-1 font-medium">
+                            <mat-label>Select Excel</mat-label>
+                        </div>
+                        <div class="flex flex-row justify-start px-4 pt-1"
+                            style="min-height: 48px; border-radius: 6px; border-width: 1px; border-color: rgb(203 213 225);">
+                            <input class="mt-2"
+                                *ngIf="!fileName"
+                                type="file"
+                                (change)="onFileSelected($event)"
+                                multiple
+                                accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+
+                            <div *ngIf="fileName"
+                                class="flex flex-row justify-start">
+                                <span class="truncate mt-2 hover:text-clip md:text-clip">{{fileName | truncateFileName}}</span>
+                                <button mat-icon-button
+                                    [color]="'primary'"
+                                    type="button"
+                                    (click)="removeFile()"
+                                    matSuffix>
+                                    <mat-icon [svgIcon]="'heroicons_solid:x'"></mat-icon>
+                                </button>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div *ngIf="circularControl.value != ''"
+                    class="flex flex-row items-center justify-center pt-4">
+                    <button *ngIf="fileName"
+                        style="background-color: #418B41;"
+                        mat-flat-button
+                        (click)="UploadExcel()"
+                        [color]="'accent'">
+                        <span>Prepare</span>
+                    </button>
+                    <button *ngIf="!fileName"
+                        class="ml-4"
+                        mat-flat-button
+                        (click)="OpenAddNewModal()"
+                        [color]="'accent'">
+                        <span>Add New</span>
+                    </button>
+                    <button class="ml-4"
+                        style="background-color: #E49621;"
+                        mat-flat-button
+                        (click)="Refresh()"
+                        [color]="'primary'">
+                        <span>Refresh</span>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

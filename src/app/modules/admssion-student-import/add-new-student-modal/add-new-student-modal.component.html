@@ -1,0 +1,171 @@
+<div class="md:w-200 md:min-w-200">
+    <div class="flex justify-between">
+        <h2 class="tracking-tight text-blue-600 mt-2">Add New Student
+            <hr class="line mt-0 pt-0"
+                style="border: 1px solid blue; width: 5rem;">
+        </h2>
+        <div>
+            <button mat-icon-button
+                class="close-button"
+                [mat-dialog-close]="true">
+                <mat-icon class="close-icon"
+                    color="grey">close</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <mat-dialog-content *ngIf="Circular_Dropdowns!=null"
+        class="mat-typography">
+        <form class="space-y-2"
+            [formGroup]="addNewStudentForm"
+            #addNewStudentNgForm="ngForm">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-x-3">
+                <mat-form-field class="w-full">
+                    <mat-label>Program</mat-label>
+                    <mat-select [formControlName]="'Program'"
+                        placeholder="Select Program">
+                        <mat-option *ngFor="let item of Circular_Dropdowns.Programs"
+                            [value]="item.ProgramId">
+                            {{item.ProgramName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="w-full">
+                    <mat-label>Shift</mat-label>
+                    <mat-select [formControlName]="'Program'"
+                        placeholder="Select Shift">
+                        <mat-option *ngFor="let item of Circular_Dropdowns.OpenProgramShifts"
+                            [value]="item.value">
+                            {{item.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="w-full">
+                    <mat-label>Group</mat-label>
+                    <mat-select [formControlName]="'Group'"
+                        placeholder="Select Group">
+                        <mat-option *ngFor="let item of Circular_Dropdowns.OpenProgramGroups"
+                            [value]="item.value">
+                            {{item.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="w-full">
+                    <mat-label>Version</mat-label>
+                    <mat-select [formControlName]="'Version'"
+                        placeholder="Select Version">
+                        <mat-option *ngFor="let item of Circular_Dropdowns.OpenProgramVersions"
+                            [value]="item.value">
+                            {{item.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="w-full">
+                    <mat-label>Category</mat-label>
+                    <mat-select [formControlName]="'Category'"
+                        placeholder="Select Category">
+                        <mat-option *ngFor="let item of Circular_Dropdowns.OpenProgramCategories"
+                            [value]="item.value">
+                            {{item.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="w-full">
+                    <mat-label>Session</mat-label>
+                    <mat-select [formControlName]="'Session'"
+                        placeholder="Select Session">
+                        <mat-option *ngFor="let item of Circular_Dropdowns.OpenProgramSessions"
+                            [value]="item.value">
+                            {{item.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="w-full">
+                    <mat-label>Student Name</mat-label>
+                    <input matInput
+                        [formControlName]="'StudentName'"
+                        type="text" />
+                </mat-form-field>
+
+                <mat-form-field class="w-full">
+                    <mat-label>Emergency Contact</mat-label>
+                    <input matInput
+                        [formControlName]="'EmergencyContact'"
+                        type="text"
+                        inputmode="numeric"
+                        pattern="[0-9]+([\.][0-9]+)?"
+                        digitOnly
+                        [decimal]="false"
+                        [allowPaste]="true"
+                        [maxlength]="11" />
+                </mat-form-field>
+
+                <mat-form-field class="w-full">
+                    <mat-label>Board</mat-label>
+                    <mat-select [formControlName]="'Board'"
+                        placeholder="Select Board">
+                        <mat-option *ngFor="let item of Circular_Dropdowns.OpenProgramBoards"
+                            [value]="item.value">
+                            {{item.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="w-full">
+                    <mat-label>Passing Year</mat-label>
+                    <mat-select [formControlName]="'PassingYear'"
+                        placeholder="Select PassingYear">
+                        <mat-option *ngFor="let item of Circular_Dropdowns.SSCPassingYear"
+                            [value]="item.value">
+                            {{item.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="w-full">
+                    <mat-label>SSC Roll</mat-label>
+                    <input matInput
+                        [formControlName]="'SSCRoll'"
+                        type="text"
+                        inputmode="numeric"
+                        pattern="[0-9]+([\.][0-9]+)?"
+                        digitOnly
+                        [decimal]="false"
+                        [allowPaste]="true" />
+                </mat-form-field>
+
+                <mat-form-field class="w-full">
+                    <mat-label>Remarks</mat-label>
+                    <input matInput
+                        [formControlName]="'Remarks'"
+                        type="text" />
+                </mat-form-field>
+
+            </div>
+
+        </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions *ngIf="Circular_Dropdowns!=null"
+        class="justify-end">
+        <div class="flex items-center justify-center">
+            <button class="ml-2"
+                mat-flat-button
+                (click)="SaveStudent()"
+                [color]="'primary'">
+                Save
+            </button>
+            <button mat-button
+                [color]="'amber'"
+                (click)="clearForm()">
+                Refresh
+            </button>
+        </div>
+    </mat-dialog-actions>
+</div>

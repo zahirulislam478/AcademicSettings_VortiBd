@@ -1,0 +1,1237 @@
+<div *ngIf="clientType == 'APPLICANT'"
+    class="flex flex-col flex-auto min-w-0">
+    <div class="flex-auto p-6 sm:p-6">
+        <div class="shadow rounded overflow-hidden">
+            <div class="bg-card flex flex-auto flex-wrap lg:pr-22">
+
+                <!--For Institute Image-->
+                <div class="flex justify-center w-full lg:w-1/6 py-5 lg:rounded dashboardBgSm dashboardBgLg">
+                    <div class="lg:block flex justify-center items-center rounded-full lg:relative inset-y-7 left-12">
+                        <img src={{imageSrc}}
+                            class="object-scale-down rounded-full"
+                            style="width: 100px; height: 100px;">
+                    </div>
+                </div>
+
+                <!--For Institute Name-->
+                <div class="flex flex-col w-full lg:w-5/6 pt-4 px-6">
+                    <mat-form-field [floatLabel]="'always'"
+                        class="gap-5 md-5"
+                        [ngClass]="{'disabled-field': institutionControl.disabled}">
+                        <mat-label>Select an Institution</mat-label>
+                        <mat-select (selectionChange)="instituteChange($event)"
+                            [formControl]="institutionControl"
+                            placeholder="Select Institute">
+                            <mat-option *ngFor="let Institute of schools"
+                                [value]="Institute.value">
+                                {{Institute.name.split("~")[0]}}
+                            </mat-option>
+                        </mat-select>
+                        <div class="disabled-overlay"
+                            *ngIf="institutionControl.disabled"></div>
+                    </mat-form-field>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-x-6">
+
+                        <!--For Admission Class Name-->
+                        <mat-form-field [floatLabel]="'always'"
+                            [ngClass]="{'disabled-field': admissionClassControl.disabled}">
+                            <mat-label>Apply To </mat-label>
+                            <mat-select (selectionChange)="admissionClassChange($event)"
+                                [formControl]="admissionClassControl"
+                                placeholder="Select Admission Class">
+                                <mat-option *ngFor="let AdmissionClass of programs"
+                                    [value]="AdmissionClass.value">
+                                    {{AdmissionClass.name}}
+                                </mat-option>
+                            </mat-select>
+                            <div class="disabled-overlay"
+                                *ngIf="admissionClassControl.disabled"></div>
+                        </mat-form-field>
+
+                        <!--For Group Name School-->
+                        <mat-form-field *ngIf="(ProgramType == 'S' && groups != null)"
+                            [ngClass]="{'disabled-field': schoolGroupControl.disabled}">
+                            <mat-label>Group</mat-label>
+                            <mat-select (selectionChange)="groupChange($event)"
+                                [formControl]="schoolGroupControl"
+                                required>
+                                <mat-option *ngFor="let Group of groups"
+                                    [value]="Group.value">
+                                    {{Group.name}}
+                                </mat-option>
+                            </mat-select>
+                            <div class="disabled-overlay"
+                                *ngIf="institutionControl.disabled"></div>
+                            <mat-error *ngIf="schoolGroupControl.errors?.required">Please Select a Group</mat-error>
+                        </mat-form-field>
+
+                        <!--For Category Name School-->
+                        <mat-form-field *ngIf="(ProgramType == 'S' && categories != null)"
+                            [ngClass]="{'disabled-field': categoryControl.disabled}">
+                            <mat-label>Category</mat-label>
+                            <mat-select (selectionChange)="categoryChange($event)"
+                                [formControl]="categoryControl"
+                                required>
+                                <mat-option *ngFor="let Category of categories"
+                                    [value]="Category.value">
+                                    {{Category.name}}
+                                </mat-option>
+                            </mat-select>
+                            <div class="disabled-overlay"
+                                *ngIf="categoryControl.disabled"></div>
+                            <mat-error *ngIf="categoryControl.errors?.required">Please Select a Category</mat-error>
+                        </mat-form-field>
+
+                        <!--For Group Name College-->
+                        <mat-form-field *ngIf="(ProgramType == 'C' && groups != null)"
+                            [ngClass]="{'disabled-field': groupControl.disabled}">
+                            <mat-label>Group</mat-label>
+                            <mat-select (selectionChange)="groupChange($event)"
+                                [formControl]="groupControl"
+                                required>
+                                <mat-option *ngFor="let Group of groups"
+                                    [value]="Group.value">
+                                    {{Group.name}}
+                                </mat-option>
+                            </mat-select>
+                            <div class="disabled-overlay"
+                                *ngIf="groupControl.disabled"></div>
+                            <mat-error *ngIf="groupControl.errors?.required">Please Select a Group</mat-error>
+                        </mat-form-field>
+
+                        <!--For Category Name College-->
+                        <mat-form-field *ngIf="(ProgramType == 'C' && categories != null)"
+                            [ngClass]="{'disabled-field': categoryControl.disabled}">
+                            <mat-label>Category</mat-label>
+                            <mat-select (selectionChange)="categoryChange($event)"
+                                [formControl]="categoryControl"
+                                required>
+                                <mat-option *ngFor="let Category of categories"
+                                    [value]="Category.value">
+                                    {{Category.name}}
+                                </mat-option>
+                            </mat-select>
+                            <div class="disabled-overlay"
+                                *ngIf="categoryControl.disabled"></div>
+                            <mat-error *ngIf="categoryControl.errors?.required">Please Select a Category</mat-error>
+                        </mat-form-field>
+
+                        <!--For Autocomplete Name School-->
+                        <mat-form-field [floatLabel]="'always'"
+                            *ngIf="ProgramType == 'S' && isProfileVisible"
+                            [ngClass]="{'disabled-field': searchControl.disabled}">
+                            <mat-label>Student Full Name</mat-label>
+                            <input matInput
+                                aria-label="Profile"
+                                [matAutocomplete]="auto"
+                                [formControl]="searchControl"
+                                placeholder="Select Profile"
+                                type="text"
+                                onkeydown="return /[a-z\s.]/i.test(event.key)">
+                            <mat-autocomplete #auto="matAutocomplete">
+                                <mat-option *ngFor="let candidate of schoolStudents"
+                                    (onSelectionChange)="Select_AutoProfile(candidate)"
+                                    [value]="candidate.CandidateName">
+                                    <div class="flex flex-row flex-wrap items-center">
+                                        <img alt=""
+                                            [src]="candidate.CandidateImage"
+                                            style="width: 25px; height: 25px;">
+                                        <span>&nbsp;{{candidate.CandidateName}}</span>
+                                    </div>
+                                </mat-option>
+                            </mat-autocomplete>
+                            <div class="disabled-overlay"
+                                *ngIf="searchControl.disabled"></div>
+                        </mat-form-field>
+
+                        <!--For SSC Roll College-->
+                        <mat-form-field *ngIf="ProgramType == 'C'"
+                            appearance="fill"
+                            [ngClass]="{'disabled-field': sscRollControl.disabled}">
+                            <mat-label>SSC Roll</mat-label>
+                            <input matInput
+                                type="text"
+                                [formControl]="sscRollControl"
+                                required
+                                oninput="this.value = this.value.replace(/\D/g, '').substring(0, 6);" />
+                            <div class="disabled-overlay"
+                                *ngIf="sscRollControl.disabled"></div>
+                            <mat-error *ngIf="sscRollControl.errors?.required">Please Input Correct Roll</mat-error>
+                        </mat-form-field>
+
+                        <!--For SSC Board College-->
+                        <mat-form-field *ngIf="(ProgramType == 'C' && boards != null)"
+                            [ngClass]="{'disabled-field': boardControl.disabled}">
+                            <mat-label>SSC Board</mat-label>
+                            <mat-select (selectionChange)="boardChange($event)"
+                                [formControl]="boardControl"
+                                required>
+                                <mat-option *ngFor="let Board of boards"
+                                    [value]="Board.value">
+                                    {{Board.name}}
+                                </mat-option>
+                            </mat-select>
+                            <div class="disabled-overlay"
+                                *ngIf="boardControl.disabled"></div>
+                            <mat-error *ngIf="boardControl.errors?.required">Please Select a Board</mat-error>
+                        </mat-form-field>
+
+                        <!--For SSC Passing Year College-->
+                        <mat-form-field *ngIf="(ProgramType == 'C' && sscYears != null)"
+                            [ngClass]="{'disabled-field': sscPassingYearControl.disabled}">
+                            <mat-label>SSC Passing Year</mat-label>
+                            <mat-select (selectionChange)="sscPassingYearChange($event)"
+                                [formControl]="sscPassingYearControl"
+                                required>
+                                <mat-option *ngFor="let Year of sscYears"
+                                    [value]="Year.value">
+                                    {{Year.name}}
+                                </mat-option>
+                            </mat-select>
+                            <div class="disabled-overlay"
+                                *ngIf="sscPassingYearControl.disabled"></div>
+                            <mat-error *ngIf="sscPassingYearControl.errors?.required">Please Select Your SSC Passing
+                                Year</mat-error>
+                        </mat-form-field>
+
+                        <div class="flex items-center justify-end mb-5"
+                            *ngIf="firstNextButton">
+                            <button class="px-8 m-1 text-base"
+                                mat-button
+                                style="background-color: #1e293b; color:#fff"
+                                [disabled]="isResetButtonDisabled"
+                                (click)="formReset()">
+                                Reset
+                            </button>
+                        </div>
+
+                        <!--Button College-->
+                        <div class="flex items-center justify-end mb-5"
+                            *ngIf="ProgramType == 'C' ">
+                            <button class="px-8 m-1 text-base"
+                                mat-button
+                                style="background-color: #1e293b; color:#fff"
+                                [disabled]="isResetButtonDisabled"
+                                (click)="formReset()">
+                                Reset
+                            </button>
+                            <button class="px-8 m-1 text-base"
+                                mat-flat-button
+                                [color]="'primary'"
+                                *ngIf="!isListPage"
+                                [disabled]="isNextButtonDisabled"
+                                (click)="showList()">
+                                Next
+                            </button>
+                        </div>
+
+                        <!--Button School-->
+                        <div class="flex items-center justify-end mb-5"
+                            *ngIf="ProgramType == 'S' && schoolNextButton">
+                            <button class="px-8 m-1 text-base"
+                                mat-button
+                                style="background-color: #1e293b; color:#fff"
+                                [disabled]="isResetButtonDisabled"
+                                (click)="formReset()">
+                                Reset
+                            </button>
+                            <button class="px-8 m-1 text-base"
+                                mat-flat-button
+                                [color]="'primary'"
+                                [disabled]="isSchoolNextButtonDisabled"
+                                (click)="showList()">
+                                Next
+                            </button>
+                        </div>
+
+                        <!--Reset Button School-->
+                        <div class="flex items-center justify-end mb-5"
+                            *ngIf="ProgramType == 'S' && !schoolNextButton && schoolResetButtonTwo">
+                            <button class="px-8 m-1 text-base"
+                                mat-button
+                                style="background-color: #1e293b; color:#fff"
+                                [disabled]="isResetButtonDisabled"
+                                (click)="formReset()">
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-end"
+                        *ngIf="ProgramType == 'S' && !schoolNextButton && schoolResettButton">
+                        <button class="px-8 m-1 text-base"
+                            mat-button
+                            style="background-color: #1e293b; color:#fff"
+                            [disabled]="isResetButtonDisabled"
+                            (click)="formReset()">
+                            Reset
+                        </button>
+                    </div>
+
+                    <!--Circular List School-->
+                    <div *ngIf="ProgramType == 'S' "
+                        class="bg-white">
+                        <div class="w-full sm:col-span-6 flex flex-col flex-auto mt-10 mb-10"
+                            *ngIf="isListPage">
+                            <mat-divider></mat-divider>
+                            <div class="text-base font-medium tracking-tight leading-6 truncate pb-5 pt-5">
+                                <span class="italic text-blue-700">You,</span> are eligible for the below circulars of
+                                <b>{{institueName}},</b>
+                            </div>
+
+                            <div class="flex flex-col flex-auto mt-2 overflow-x-auto bg-card drop-shadow-xl">
+                                <table class="custom-table"
+                                    mat-table
+                                    [dataSource]="circularFields">
+
+                                    <ng-container matColumnDef="ProgramName">
+                                        <th mat-header-cell
+                                            *matHeaderCellDef
+                                            style="text-align: center;"
+                                            class="text-base"> Program Name
+                                        </th>th
+                                        <td mat-cell
+                                            *matCellDef="let circular"
+                                            class="text-base"
+                                            style="text-align: center; padding: 10px"> {{ circular.ProgramName }} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="GroupName"
+                                        *ngIf="showGroupNameColumn">
+                                        <th mat-header-cell
+                                            *matHeaderCellDef
+                                            style="text-align: center;"
+                                            class="text-base"> Group Name
+                                        </th>
+                                        <td mat-cell
+                                            *matCellDef="let circular"
+                                            class="text-base"
+                                            style="text-align: center; padding: 10px"> {{ circular.GroupName }} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="VersionName">
+                                        <th mat-header-cell
+                                            *matHeaderCellDef
+                                            style="text-align: center;"
+                                            class="text-base"> Version Name
+                                        </th>th
+                                        <td mat-cell
+                                            *matCellDef="let circular"
+                                            class="text-base"
+                                            style="text-align: center; padding: 10px"> {{ circular.VersionName }} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="ShiftName">
+                                        <th mat-header-cell
+                                            *matHeaderCellDef
+                                            style="text-align: center;"
+                                            class="text-base"> Shift Name
+                                        </th>th
+                                        <td mat-cell
+                                            *matCellDef="let circular"
+                                            class="text-base"
+                                            style="text-align: center; padding: 10px"> {{ circular.ShiftName }} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="SessionName">
+                                        <th mat-header-cell
+                                            *matHeaderCellDef
+                                            style="text-align: center;"
+                                            class="text-base"> Session Name
+                                        </th>
+                                        <td mat-cell
+                                            *matCellDef="let circular"
+                                            class="text-base"
+                                            style="text-align: center; padding: 10px"> {{ circular.SessionName }} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="FormAmount">
+                                        <th mat-header-cell
+                                            *matHeaderCellDef
+                                            style="text-align: center;"
+                                            class="text-base"> Form Amount
+                                        </th>th
+                                        <td mat-cell
+                                            *matCellDef="let circular"
+                                            class="text-base"
+                                            style="text-align: center; padding: 10px"> {{ circular.FormAmount }} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="ConvAmount">
+                                        <th mat-header-cell
+                                            *matHeaderCellDef
+                                            style="text-align: center;"
+                                            class="text-base"> Conv Amount
+                                        </th>th
+                                        <td mat-cell
+                                            *matCellDef="let circular"
+                                            class="text-base"
+                                            style="text-align: center; padding: 10px"> {{ circular.ConvAmount }} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="Action">
+                                        <th mat-header-cell
+                                            *matHeaderCellDef
+                                            style="text-align: center;"
+                                            class="text-base"> Action </th>
+                                        <td mat-cell
+                                            *matCellDef="let circular"
+                                            class="text-base"
+                                            style="text-align: center; padding: 10px">
+
+                                            <button class="text-base"
+                                                *ngIf="circular.IsExpired"
+                                                mat-flat-button
+                                                [color]="'primary'"
+                                                style="background-color: red; color: #fff">
+                                                Circular Expired
+                                            </button>
+
+                                            <button class="text-base"
+                                                *ngIf="circular.IsExpired == false"
+                                                mat-flat-button
+                                                [color]="'primary'"
+                                                (click)="goToForm(circular)">
+                                                Apply Now
+                                            </button>
+                                        </td>
+                                    </ng-container>
+
+                                    <tr mat-header-row
+                                        *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr mat-row
+                                        *matRowDef="let row; columns: displayedColumns;"
+                                        [ngClass]="{ 'no-bottom-border': circularFields.indexOf(row) === circularFields.length - 1 }">
+                                    </tr>
+
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Circular List College-->
+                    <div *ngIf="ProgramType == 'C' "
+                        class="bg-white">
+                        <div class="w-full sm:col-span-6 flex flex-col flex-auto mt-10 mb-10"
+                            *ngIf="isListPage">
+                            <mat-divider></mat-divider>
+                            <div class="text-base font-medium tracking-tight leading-6 truncate pb-5 pt-5">
+                                <span class="italic text-blue-700">You,</span> are eligible for the below circulars of
+                                <b>{{institueName}},</b>
+                            </div>
+
+                            <div class="flex flex-col flex-auto mt-2 overflow-x-auto bg-card drop-shadow-xl">
+                                <table class="custom-table"
+                                    mat-table
+                                    [dataSource]="circularFields">
+
+                                    <ng-container matColumnDef="ProgramName">
+                                        <th mat-header-cell
+                                            *matHeaderCellDef
+                                            style="text-align: center;"
+                                            class="text-base"> Program Name
+                                        </th>th
+                                        <td mat-cell
+                                            *matCellDef="let circular"
+                                            class="text-base"
+                                            style="text-align: center; padding: 10px">
+                                            {{ circular.ProgramName }} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="GroupName">
+                                        <th mat-header-cell
+                                            *matHeaderCellDef
+                                            style="text-align: center;"
+                                            class="text-base"> Group Name
+                                        </th>
+                                        <td mat-cell
+                                            *matCellDef="let circular"
+                                            class="text-base"
+                                            style="text-align: center; padding: 10px"> {{ circular.GroupName }} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="VersionName">
+                                        <th mat-header-cell
+                                            *matHeaderCellDef
+                                            style="text-align: center;"
+                                            class="text-base"> Version Name
+                                        </th>th
+                                        <td mat-cell
+                                            *matCellDef="let circular"
+                                            class="text-base"
+                                            style="text-align: center; padding: 10px">
+                                            {{ circular.VersionName }} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="ShiftName">
+                                        <th mat-header-cell
+                                            *matHeaderCellDef
+                                            style="text-align: center;"
+                                            class="text-base"> Shift Name
+                                        </th>th
+                                        <td mat-cell
+                                            *matCellDef="let circular"
+                                            class="text-base"
+                                            style="text-align: center; padding: 10px">
+                                            {{ circular.ShiftName }} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="SessionName">
+                                        <th mat-header-cell
+                                            *matHeaderCellDef
+                                            style="text-align: center;"
+                                            class="text-base"> Session Name
+                                        </th>
+                                        <td mat-cell
+                                            *matCellDef="let circular"
+                                            class="text-base"
+                                            style="text-align: center; padding: 10px">
+                                            {{ circular.SessionName }} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="FormAmount">
+                                        <th mat-header-cell
+                                            *matHeaderCellDef
+                                            style="text-align: center;"
+                                            class="text-base"> Form Amount
+                                        </th>th
+                                        <td mat-cell
+                                            *matCellDef="let circular"
+                                            class="text-base"
+                                            style="text-align: center; padding: 10px">
+                                            {{ circular.FormAmount }} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="ConvAmount">
+                                        <th mat-header-cell
+                                            *matHeaderCellDef
+                                            style="text-align: center;"
+                                            class="text-base"> Conv Amount
+                                        </th>th
+                                        <td mat-cell
+                                            *matCellDef="let circular"
+                                            class="text-base"
+                                            style="text-align: center; padding: 10px">
+                                            {{ circular.ConvAmount }} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="Action">
+                                        <th mat-header-cell
+                                            *matHeaderCellDef
+                                            style="text-align: center;"
+                                            class="text-base"> Action </th>
+                                        <td mat-cell
+                                            *matCellDef="let circular"
+                                            class="text-base"
+                                            style="text-align: center; padding: 10px">
+                                            <button class="text-base"
+                                                mat-flat-button
+                                                [color]="'primary'"
+                                                (click)="goToForm(circular)">
+                                                Apply Now
+                                            </button>
+                                        </td>
+                                    </ng-container>
+
+                                    <tr mat-header-row
+                                        *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr mat-row
+                                        *matRowDef="let row; columns: displayedColumns;"
+                                        [ngClass]="{ 'no-bottom-border': circularFields.indexOf(row) === circularFields.length - 1 }">
+                                    </tr>
+
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Application Status-->
+    <div class="xl:col-span-12 flex flex-col flex-auto bg-card shadow rounded mx-5 mb-5 p-6 sm:p-6 text-base"
+        style="background-color: #C4C4C426 !important;">
+        <div class="flex justify-between pb-3 text-base">
+            <h2 class="font-extrabold"
+                style="color: black !important; font-size: large !important;">Application</h2>
+            <button *ngIf="data.length != 0"
+                mat-icon-button
+                [matMenuTriggerFor]="menu"
+                aria-label="Example icon-button with a menu">
+                <mat-icon>reorder</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                    <mat-icon>list_alt</mat-icon>
+                    <span (click)="showAll()"
+                        class="text-base">All List</span>
+                </button>
+                <button mat-menu-item>
+                    <mat-icon>payment</mat-icon>
+                    <span (click)="showPaid()"
+                        class="text-base">Paid List</span>
+                </button>
+                <button mat-menu-item>
+                    <mat-icon>not_interested</mat-icon>
+                    <span (click)="showUnpaid()"
+                        class="text-base">Unpaid List</span>
+                </button>
+                <button mat-menu-item>
+                    <mat-icon>drafts</mat-icon>
+                    <span (click)="showDraft()"
+                        class="text-base">Draft List</span>
+                </button>
+                <button mat-menu-item>
+                    <mat-icon>notifications_off</mat-icon>
+                    <span (click)="hideAll()"
+                        class="text-base">Hide All</span>
+                </button>
+            </mat-menu>
+        </div>
+        <!-- <div class="overflow-x-auto bg-card shadow-xl rounded divide-y"
+            *ngIf="!applicantBanner">
+            <div class="grid grid-cols-12 gap-x-1 p-3 items-center my-0 skeleton">
+                <div class="col-span-1s">
+                    <div class="skeleton-left flex1">
+                        <div class="square circle"></div>
+                    </div>
+                </div>
+                <div class="col-span-5">
+                    <div>
+                        <div class="skeleton-right flex2 mr-30">
+                            <div class="line"></div>
+                            <div class="line  w75"></div>
+                            <div class="line h8 w50"></div>
+                            <div class="line h17 w40 m10"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-1">
+                    <div class="skeleton-left flex1">
+                        <div class="square circle"></div>
+                    </div>
+                </div>
+                <div class="col-span-3 ">
+                    <div>
+                        <div class="skeleton-right flex2">
+                            <div class="line h17 w40 m10"></div>
+                            <div class="line h8 w50"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-2 ml-20">
+                    <div class="skeleton-right flex2">
+                        <div class="line h17 w40 m10"></div>
+                        <div class="line h17 w40 m10"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-x-1 p-3 items-center my-0 skeleton">
+                <div class="col-span-1s">
+                    <div class="skeleton-left flex1">
+                        <div class="square circle"></div>
+                    </div>
+                </div>
+                <div class="col-span-5">
+                    <div>
+                        <div class="skeleton-right flex2 mr-30">
+                            <div class="line"></div>
+                            <div class="line  w75"></div>
+                            <div class="line h8 w50"></div>
+                            <div class="line h17 w40 m10"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-1">
+                    <div class="skeleton-left flex1">
+                        <div class="square circle"></div>
+                    </div>
+                </div>
+                <div class="col-span-3 ">
+                    <div>
+                        <div class="skeleton-right flex2">
+                            <div class="line h17 w40 m10"></div>
+                            <div class="line h8 w50"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-2 ml-20">
+                    <div class="skeleton-right flex2">
+                        <div class="line h17 w40 m10"></div>
+                        <div class="line h17 w40 m10"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-x-1 p-3 items-center my-0 skeleton">
+                <div class="col-span-1s">
+                    <div class="skeleton-left flex1">
+                        <div class="square circle"></div>
+                    </div>
+                </div>
+                <div class="col-span-5">
+                    <div>
+                        <div class="skeleton-right flex2 mr-30">
+                            <div class="line"></div>
+                            <div class="line  w75"></div>
+                            <div class="line h8 w50"></div>
+                            <div class="line h17 w40 m10"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-1">
+                    <div class="skeleton-left flex1">
+                        <div class="square circle"></div>
+                    </div>
+                </div>
+                <div class="col-span-3 ">
+                    <div>
+                        <div class="skeleton-right flex2">
+                            <div class="line h17 w40 m10"></div>
+                            <div class="line h8 w50"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-2 ml-20">
+                    <div class="skeleton-right flex2">
+                        <div class="line h17 w40 m10"></div>
+                        <div class="line h17 w40 m10"></div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <!-- <div class="overflow-x-auto bg-card shadow-xl rounded divide-y text-base"
+            *ngIf="applicantBanner">
+            <div class="grid grid-cols-11 py-3 px-20 items-center "
+                *ngFor="let item of delayedData">
+                <div class="col-span-2 lg:col-span-1">
+                    <img class="circle"
+                        [src]="item.url">
+                </div>
+                <div class="col-span-3 lg:col-span-4">
+                    <div>
+                        <div class="text-base">
+                            {{item.collegeName}}
+                        </div>
+                        <div class="text-base">
+                            {{item.appStatus}}
+                        </div>
+                        <div class="text-base">
+                            {{item.appDate}}
+                        </div>
+                        <div class="text-base"
+                            *ngIf="item.paymentStatus == 'Paid'"
+                            style="color: yellowgreen !important">
+                            {{item.paymentStatus}}
+                        </div>
+                        <div class="text-base"
+                            *ngIf="item.paymentStatus == 'Unpaid'"
+                            style="color: blue !important">
+                            {{item.paymentStatus}}
+                        </div>
+                        <div class="text-base"
+                            *ngIf="item.paymentStatus == 'Draft'"
+                            style="color: red !important">
+                            {{item.paymentStatus}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-2 lg:col-span-1">
+                    <img class="circle"
+                        [src]="item.appUrl">
+                </div>
+                <div class="col-span-2 lg:col-span-3">
+                    <div>
+                        <div>
+                            {{item.appName}},
+                        </div>
+                        <div>
+                            <span style="color: blue !important">{{item.applicationId}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-2 lg:col-span-1 lg:pl-15">
+                    <div class="self-center font-extrabold">
+                        <button class="fuse-mat-button-rounded text-base"
+                            mat-flat-button
+                            *ngIf="item.status == 'Download'"
+                            style="color: green !important">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                class="w-6 h-6">
+                                <path fill-rule="evenodd"
+                                    d="M12 2.25a.75.75 0 01.75.75v11.69l3.22-3.22a.75.75 0 111.06 1.06l-4.5 4.5a.75.75 0 01-1.06 0l-4.5-4.5a.75.75 0 111.06-1.06l3.22 3.22V3a.75.75 0 01.75-.75zm-9 13.5a.75.75 0 01.75.75v2.25a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5V16.5a.75.75 0 011.5 0v2.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V16.5a.75.75 0 01.75-.75z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <span class="ml-2 text-base">{{item.status}}</span>
+                        </button>
+                        <button class="fuse-mat-button-rounded text-base"
+                            mat-flat-button
+                            *ngIf="item.status == 'Pay Now'"
+                            style="color: blue !important">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                class="w-6 h-6">
+                                <path d="M4.5 3.75a3 3 0 00-3 3v.75h21v-.75a3 3 0 00-3-3h-15z" />
+                                <path fill-rule="evenodd"
+                                    d="M22.5 9.75h-21v7.5a3 3 0 003 3h15a3 3 0 003-3v-7.5zm-18 3.75a.75.75 0 01.75-.75h6a.75.75 0 010 1.5h-6a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5h3a.75.75 0 000-1.5h-3z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <span class="ml-2 text-base">{{item.status}}</span>
+                        </button>
+                        <button class="fuse-mat-button-rounded text-base"
+                            mat-flat-button
+                            *ngIf="item.status == 'Apply Now'"
+                            style="color: red !important">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                class="w-6 h-6">
+                                <path
+                                    d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
+                                <path
+                                    d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
+                            </svg>
+                            <span class="ml-2 text-base">{{item.status}}</span>
+                        </button>
+                        <div class="text-md align-middle">
+                            <button class="fuse-mat-button-rounded"
+                                mat-flat-button
+                                (click)="hideItem(item)">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    class="w-6 h-6">
+                                    <path
+                                        d="M3.53 2.47a.75.75 0 00-1.06 1.06l18 18a.75.75 0 101.06-1.06l-18-18zM22.676 12.553a11.249 11.249 0 01-2.631 4.31l-3.099-3.099a5.25 5.25 0 00-6.71-6.71L7.759 4.577a11.217 11.217 0 014.242-.827c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113z" />
+                                    <path
+                                        d="M15.75 12c0 .18-.013.357-.037.53l-4.244-4.243A3.75 3.75 0 0115.75 12zM12.53 15.713l-4.243-4.244a3.75 3.75 0 004.243 4.243z" />
+                                    <path
+                                        d="M6.75 12c0-.619.107-1.213.304-1.764l-3.1-3.1a11.25 11.25 0 00-2.63 4.31c-.12.362-.12.752 0 1.114 1.489 4.467 5.704 7.69 10.675 7.69 1.5 0 2.933-.294 4.242-.827l-2.477-2.477A5.25 5.25 0 016.75 12z" />
+                                </svg>
+                                <span class="ml-2 text-base">{{item.peek}}</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <div class="overflow-x-auto bg-card shadow-xl rounded divide-y text-base"
+            *ngIf="data.length != 0">
+            <div class="grid grid-cols-11 py-3 px-20 items-center "
+                *ngFor="let item of data">
+                <div class="col-span-2 lg:col-span-1">
+                    <img class="circle"
+                        [src]="'https://cloudcampus24-cdn.s3.ap-southeast-1.amazonaws.com/cdn/img/client/logo/' + item.ClientShortName + '.png'">
+                </div>
+                <div class="col-span-3 lg:col-span-4">
+                    <div>
+                        <div class="text-base">
+                            {{item.ClientName}}
+                        </div>
+                        <div>
+                            Circular Title: {{item.CircularTitle}},
+                        </div>
+                        <div class="text-base">
+                            {{item.Applied == true ? 'Applied: Yes' : 'Applied: No'}}
+                        </div>
+                        <div class="text-base">
+                            Applied Date: {{item.ApplyDate == null ? '--' : item.ApplyDate | date : 'dd/MM/yyyy'}}
+                        </div>
+                        <!-- <div class="text-base"
+                            *ngIf="item.paymentStatus == 'Paid'"
+                            style="color: yellowgreen !important">
+                            {{item.paymentStatus}}
+                        </div>
+                        <div class="text-base"
+                            *ngIf="item.paymentStatus == 'Unpaid'"
+                            style="color: blue !important">
+                            {{item.paymentStatus}}
+                        </div>
+                        <div class="text-base"
+                            *ngIf="item.paymentStatus == 'Draft'"
+                            style="color: red !important">
+                            {{item.paymentStatus}}
+                        </div> -->
+                    </div>
+                </div>
+                <div class="col-span-2 lg:col-span-1">
+                    <img class="circle"
+                        [src]="item.PhotoPathS">
+                </div>
+                <div class="col-span-2 lg:col-span-3">
+                    <div>
+                        <div>
+                            Name: {{item.StudentName}},
+                        </div>
+                        <div>
+                            Class: {{item.ProgramName}},
+                        </div>
+                        <div *ngIf="item.GroupId != null">
+                            Group: {{item.GroupName}}
+                        </div>
+                        <div>
+                            Shift: {{item.ShiftName}},
+                        </div>
+                        <div>
+                            <span style="color: blue !important">Tracking No: {{item.ApplicationId}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-2 lg:col-span-1 lg:pl-15">
+                    <!-- <div *ngIf="item.ProgramType=='C'"
+                        class="self-center font-extrabold">
+                        <button class="fuse-mat-button-rounded text-base"
+                            mat-flat-button
+                            *ngIf="item.Applied"
+                            [matMenuTriggerFor]="dlmenu"
+                            style="color: green !important">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                class="w-6 h-6">
+                                <path fill-rule="evenodd"
+                                    d="M12 2.25a.75.75 0 01.75.75v11.69l3.22-3.22a.75.75 0 111.06 1.06l-4.5 4.5a.75.75 0 01-1.06 0l-4.5-4.5a.75.75 0 111.06-1.06l3.22 3.22V3a.75.75 0 01.75-.75zm-9 13.5a.75.75 0 01.75.75v2.25a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5V16.5a.75.75 0 011.5 0v2.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V16.5a.75.75 0 01.75-.75z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <span class="ml-2 text-base">Download</span>
+                        </button>
+
+                        <mat-menu #dlmenu="matMenu">
+                            <button mat-menu-item>
+                                <mat-icon>picture_as_pdf</mat-icon>
+                                <span (click)="Download_applicationForm(item)"
+                                    class="text-base">Application Form</span>
+                            </button>
+                            <button mat-menu-item>
+                                <mat-icon>picture_as_pdf</mat-icon>
+                                <span (click)="Download_idCard(item)"
+                                    class="text-base">Id Card</span>
+                            </button>
+                            <button mat-menu-item>
+                                <mat-icon>picture_as_pdf</mat-icon>
+                                <span (click)="Download_libraryCard(item)"
+                                    class="text-base">Library Card</span>
+                            </button>
+                            <button mat-menu-item>
+                                <mat-icon>picture_as_pdf</mat-icon>
+                                <span (click)="Download_transportApplyForm(item)"
+                                    class="text-base">Transport Apply Form</span>
+                            </button>
+                        </mat-menu>
+
+                        <button class="fuse-mat-button-rounded text-base"
+                            mat-flat-button
+                            *ngIf="!item.Applied"
+                            (click)="ResumeApplyForm(item)"
+                            style="color: red !important">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                class="w-6 h-6">
+                                <path
+                                    d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
+                                <path
+                                    d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
+                            </svg>
+                            <span class="ml-2 text-base">Complete Application</span>
+                        </button>
+
+                    </div>
+
+                    <div *ngIf="item.ProgramType=='S'"
+                        class="self-center font-extrabold">
+
+                        <button class="fuse-mat-button-rounded text-base"
+                            mat-flat-button
+                            *ngIf="ShowPayOption(item)"
+                            (click)="ResumePayment(item)"
+                            style="color: green !important">
+
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                class="w-6 h-6">
+                                <path
+                                    d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z">
+                                </path>
+                            </svg>
+
+                            <span class="ml-2 text-base">Complete Payment</span>
+                        </button>
+
+                        <button class="fuse-mat-button-rounded text-base"
+                            *ngIf="ShowDLOption(item)"
+                            mat-flat-button
+                            [matMenuTriggerFor]="dlmenu"
+                            style="color: green !important">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                class="w-6 h-6">
+                                <path fill-rule="evenodd"
+                                    d="M12 2.25a.75.75 0 01.75.75v11.69l3.22-3.22a.75.75 0 111.06 1.06l-4.5 4.5a.75.75 0 01-1.06 0l-4.5-4.5a.75.75 0 111.06-1.06l3.22 3.22V3a.75.75 0 01.75-.75zm-9 13.5a.75.75 0 01.75.75v2.25a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5V16.5a.75.75 0 011.5 0v2.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V16.5a.75.75 0 01.75-.75z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <span class="ml-2 text-base">Download</span>
+                        </button>
+
+                        <mat-menu #dlmenu="matMenu">
+                            <button mat-menu-item
+                                *ngIf="item.AdmitCard != null && item.AdmitCard">
+                                <mat-icon>picture_as_pdf</mat-icon>
+                                <span (click)="Download_admitCard(item)"
+                                    class="text-base">Admit Card</span>
+                            </button>
+                            <button mat-menu-item
+                                *ngIf="item.AdmissionForm != null && item.AdmissionForm">
+                                <mat-icon>picture_as_pdf</mat-icon>
+                                <span (click)="Download_applicationForm(item)"
+                                    class="text-base">Application Form</span>
+                            </button>
+                            <button mat-menu-item
+                                *ngIf="item.IDCard != null && item.IDCard">
+                                <mat-icon>picture_as_pdf</mat-icon>
+                                <span (click)="Download_idCard(item)"
+                                    class="text-base">Id Card</span>
+                            </button>
+                            <button mat-menu-item
+                                *ngIf="item.LibraryCard != null && item.LibraryCard">
+                                <mat-icon>picture_as_pdf</mat-icon>
+                                <span (click)="Download_libraryCard(item)"
+                                    class="text-base">Library Card</span>
+                            </button>
+                            <button mat-menu-item
+                                *ngIf="item.TransportCard != null && item.TransportCard">
+                                <mat-icon>picture_as_pdf</mat-icon>
+                                <span (click)="Download_transportApplyForm(item)"
+                                    class="text-base">Transport Apply Form</span>
+                            </button>
+                        </mat-menu>
+
+                        <button class="fuse-mat-button-rounded text-base"
+                            mat-flat-button
+                            *ngIf="!item.Applied"
+                            (click)="ResumeApplyForm(item)"
+                            style="color: red !important">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                class="w-6 h-6">
+                                <path
+                                    d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
+                                <path
+                                    d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
+                            </svg>
+                            <span class="ml-2 text-base">Complete Application</span>
+                        </button>
+
+                    </div> -->
+
+                    <div class="self-center font-extrabold">
+                        <ng-container *ngIf="item.Applied && (item.FormAmount > 0 || item.ConvAmount > 0)">
+
+                            <button class="fuse-mat-button-rounded text-base"
+                                mat-flat-button
+                                *ngIf="item.Transactions && item.Transactions.length != 0"
+                                [matMenuTriggerFor]="dlmenu"
+                                style="color: green !important">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    class="w-6 h-6">
+                                    <path fill-rule="evenodd"
+                                        d="M12 2.25a.75.75 0 01.75.75v11.69l3.22-3.22a.75.75 0 111.06 1.06l-4.5 4.5a.75.75 0 01-1.06 0l-4.5-4.5a.75.75 0 111.06-1.06l3.22 3.22V3a.75.75 0 01.75-.75zm-9 13.5a.75.75 0 01.75.75v2.25a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5V16.5a.75.75 0 011.5 0v2.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V16.5a.75.75 0 01.75-.75z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                <span class="ml-2 text-base">Download</span>
+                            </button>
+
+                            <mat-menu #dlmenu="matMenu">
+                                <button mat-menu-item
+                                    *ngIf="item.AdmitCard != null && item.AdmitCard">
+                                    <mat-icon>picture_as_pdf</mat-icon>
+                                    <span (click)="Download_admitCard(item)"
+                                        class="text-base">Admit Card</span>
+                                </button>
+                                <button mat-menu-item
+                                    *ngIf="item.AdmissionForm != null && item.AdmissionForm">
+                                    <mat-icon>picture_as_pdf</mat-icon>
+                                    <span (click)="Download_applicationForm(item)"
+                                        class="text-base">Application Form</span>
+                                </button>
+                                <button mat-menu-item
+                                    *ngIf="item.IDCard != null && item.IDCard">
+                                    <mat-icon>picture_as_pdf</mat-icon>
+                                    <span (click)="Download_idCard(item)"
+                                        class="text-base">Id Card</span>
+                                </button>
+                                <button mat-menu-item
+                                    *ngIf="item.LibraryCard != null && item.LibraryCard">
+                                    <mat-icon>picture_as_pdf</mat-icon>
+                                    <span (click)="Download_libraryCard(item)"
+                                        class="text-base">Library Card</span>
+                                </button>
+                                <button mat-menu-item
+                                    *ngIf="item.TransportCard != null && item.TransportCard">
+                                    <mat-icon>picture_as_pdf</mat-icon>
+                                    <span (click)="Download_transportApplyForm(item)"
+                                        class="text-base">Transport Apply Form</span>
+                                </button>
+                            </mat-menu>
+
+                            <button class="fuse-mat-button-rounded text-base"
+                                mat-flat-button
+                                *ngIf="item.IsExpired == false && item.Transactions && item.Transactions.length == 0"
+                                (click)="ResumePayment(item)"
+                                style="color: orange !important">
+
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    class="w-6 h-6">
+                                    <path
+                                        d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z">
+                                    </path>
+                                </svg>
+
+                                <span class="ml-2 text-base">Complete Payment</span>
+                            </button>
+
+                            <button class="fuse-mat-button-rounded text-base"
+                                mat-flat-button
+                                *ngIf="item.IsExpired && item.Transactions && item.Transactions.length == 0"
+                                style="color: red !important">
+
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    class="w-6 h-6">
+                                    <path
+                                        d="M 12 2 C 6.4889971 2 2 6.4889971 2 12 C 2 17.511003 6.4889971 22 12 22 C 17.511003 22 22 17.511003 22 12 C 22 6.4889971 17.511003 2 12 2 z M 12 4 C 16.430123 4 20 7.5698774 20 12 C 20 16.430123 16.430123 20 12 20 C 7.5698774 20 4 16.430123 4 12 C 4 7.5698774 7.5698774 4 12 4 z M 11 6 L 11 12.414062 L 15.292969 16.707031 L 16.707031 15.292969 L 13 11.585938 L 13 6 L 11 6 z">
+                                    </path>
+                                </svg>
+                                <span class="ml-2 text-base">Circular Expired</span>
+                            </button>
+
+                        </ng-container>
+
+                        <ng-container *ngIf="item.Applied && item.FormAmount == 0 && item.ConvAmount == 0">
+                            <button class="fuse-mat-button-rounded text-base"
+                                mat-flat-button
+                                [matMenuTriggerFor]="dlmenu"
+                                style="color: green !important">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    class="w-6 h-6">
+                                    <path fill-rule="evenodd"
+                                        d="M12 2.25a.75.75 0 01.75.75v11.69l3.22-3.22a.75.75 0 111.06 1.06l-4.5 4.5a.75.75 0 01-1.06 0l-4.5-4.5a.75.75 0 111.06-1.06l3.22 3.22V3a.75.75 0 01.75-.75zm-9 13.5a.75.75 0 01.75.75v2.25a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5V16.5a.75.75 0 011.5 0v2.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V16.5a.75.75 0 01.75-.75z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                <span class="ml-2 text-base">Download</span>
+                            </button>
+
+                            <mat-menu #dlmenu="matMenu">
+                                <button mat-menu-item
+                                    *ngIf="item.AdmitCard != null && item.AdmitCard">
+                                    <mat-icon>picture_as_pdf</mat-icon>
+                                    <span (click)="Download_admitCard(item)"
+                                        class="text-base">Admit Card</span>
+                                </button>
+                                <button mat-menu-item
+                                    *ngIf="item.AdmissionForm != null && item.AdmissionForm">
+                                    <mat-icon>picture_as_pdf</mat-icon>
+                                    <span (click)="Download_applicationForm(item)"
+                                        class="text-base">Application Form</span>
+                                </button>
+                                <button mat-menu-item
+                                    *ngIf="item.IDCard != null && item.IDCard">
+                                    <mat-icon>picture_as_pdf</mat-icon>
+                                    <span (click)="Download_idCard(item)"
+                                        class="text-base">Id Card</span>
+                                </button>
+                                <button mat-menu-item
+                                    *ngIf="item.LibraryCard != null && item.LibraryCard">
+                                    <mat-icon>picture_as_pdf</mat-icon>
+                                    <span (click)="Download_libraryCard(item)"
+                                        class="text-base">Library Card</span>
+                                </button>
+                                <button mat-menu-item
+                                    *ngIf="item.TransportCard != null && item.TransportCard">
+                                    <mat-icon>picture_as_pdf</mat-icon>
+                                    <span (click)="Download_transportApplyForm(item)"
+                                        class="text-base">Transport Apply Form</span>
+                                </button>
+                            </mat-menu>
+                        </ng-container>
+
+                        <ng-container *ngIf="item.IsExpired == false && item.Applied == false">
+                            <button class="fuse-mat-button-rounded text-base"
+                                mat-flat-button
+                                (click)="ResumeApplyForm(item)"
+                                style="color: red !important">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    class="w-6 h-6">
+                                    <path
+                                        d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
+                                    <path
+                                        d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
+                                </svg>
+                                <span class="ml-2 text-base">Complete Application</span>
+                            </button>
+                        </ng-container>
+
+                        <ng-container *ngIf="item.IsExpired && item.Applied == false">
+                            <button class="fuse-mat-button-rounded text-base"
+                                mat-flat-button
+                                style="color: red !important">
+
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    class="w-6 h-6">
+                                    <path
+                                        d="M 12 2 C 6.4889971 2 2 6.4889971 2 12 C 2 17.511003 6.4889971 22 12 22 C 17.511003 22 22 17.511003 22 12 C 22 6.4889971 17.511003 2 12 2 z M 12 4 C 16.430123 4 20 7.5698774 20 12 C 20 16.430123 16.430123 20 12 20 C 7.5698774 20 4 16.430123 4 12 C 4 7.5698774 7.5698774 4 12 4 z M 11 6 L 11 12.414062 L 15.292969 16.707031 L 16.707031 15.292969 L 13 11.585938 L 13 6 L 11 6 z">
+                                    </path>
+                                </svg>
+                                <span class="ml-2 text-base">Circular Expired</span>
+                            </button>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rounded divide-y text-base"
+            *ngIf="data.length == 0">
+            <div class="text-4xl font-extrabold tracking-tight leading-none p-8"> No Application Data Found
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="clientType == 'ADMIN'"
+    class="flex flex-col flex-auto min-w-0">
+
+    <div class="flex-auto p-6 sm:p-10">
+
+        <div class="w-full max-w-screen-xl mx-auto">
+
+            <div class="mb-10">
+                <div class="text-4xl font-extrabold tracking-tight leading-none">Welcome To VortiBd Dashboard
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
